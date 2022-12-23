@@ -1,0 +1,25 @@
+includes:
+    - config/extension.neon
+
+parameters:
+    # parameters of this extension
+    cognitive_complexity:
+        class: 50
+        function: 8
+
+    type_coverage:
+        return_type: 99
+        param_type: 99
+        property_type: 99
+
+    level: 8
+
+    paths:
+        - src
+        - tests
+
+    checkGenericClassInNonGenericObjectType: false
+
+    excludePaths:
+        - "*/Fixture/*"
+        - "*/Source/*"
