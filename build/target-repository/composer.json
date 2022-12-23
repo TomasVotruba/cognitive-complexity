@@ -1,7 +1,7 @@
 {
-    "name": "tomasvotruba/type-coverage",
+    "name": "tomasvotruba/cognitive-complexity",
     "type": "phpstan-extension",
-    "description": "Measure type coverage of your project",
+    "description": "PHPStan rules to measure cognitive complexity of your classes and methods",
     "license": "MIT",
     "require": {
         "php": "^7.2 || 8.0.*",
