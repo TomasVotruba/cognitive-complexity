@@ -28,7 +28,7 @@ final class ClassLikeCognitiveComplexityRuleTest extends RuleTestCase
         $errorMessage = sprintf(ClassLikeCognitiveComplexityRule::ERROR_MESSAGE, 54, 50);
         yield [__DIR__ . '/Fixture/ClassWithManyComplexMethods.php', [[$errorMessage, 7]]];
 
-        // comlexity: 9
+        // complexity: 9
         yield [__DIR__ . '/Fixture/SimpleCommand.php', []];
     }
 

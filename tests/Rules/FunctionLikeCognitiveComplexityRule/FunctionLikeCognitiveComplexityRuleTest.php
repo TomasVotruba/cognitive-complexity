@@ -36,7 +36,7 @@ final class FunctionLikeCognitiveComplexityRuleTest extends RuleTestCase
             9,
             8
         );
-        yield [__DIR__ . '/Fixture/ClassMethodOverComplicated.php', [[$errorMessage, 7]]];
+        yield [__DIR__ . '/Fixture/ClassMethodOverComplicated.php', [[$errorMessage, 9]]];
 
         $errorMessage = sprintf(
             FunctionLikeCognitiveComplexityRule::ERROR_MESSAGE,
