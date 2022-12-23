@@ -1,7 +1,7 @@
 {
     "name": "tomasvotruba/cognitive-complexity",
     "type": "phpstan-extension",
-    "description": "PHPStan rules to measure cognitive complexity in your project",
+    "description": "PHPStan rules to measure cognitive complexity of your classes and methods",
     "license": "MIT",
     "require": {
         "php": "^8.1",
