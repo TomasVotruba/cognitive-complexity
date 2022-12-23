@@ -19,9 +19,9 @@ use TomasVotruba\CognitiveComplexity\NodeVisitor\NestingNodeVisitor;
 final class AstCognitiveComplexityAnalyzer
 {
     public function __construct(
-        private ComplexityNodeTraverserFactory $complexityNodeTraverserFactory,
-        private CognitiveComplexityDataCollector $cognitiveComplexityDataCollector,
-        private NestingNodeVisitor $nestingNodeVisitor
+        private readonly ComplexityNodeTraverserFactory $complexityNodeTraverserFactory,
+        private readonly CognitiveComplexityDataCollector $cognitiveComplexityDataCollector,
+        private readonly NestingNodeVisitor $nestingNodeVisitor
     ) {
     }
 

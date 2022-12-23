@@ -11,8 +11,8 @@ use TomasVotruba\CognitiveComplexity\NodeVisitor\NestingNodeVisitor;
 final class ComplexityNodeTraverserFactory
 {
     public function __construct(
-        private NestingNodeVisitor $nestingNodeVisitor,
-        private ComplexityNodeVisitor $complexityNodeVisitor
+        private readonly NestingNodeVisitor $nestingNodeVisitor,
+        private readonly ComplexityNodeVisitor $complexityNodeVisitor
     ) {
     }
 

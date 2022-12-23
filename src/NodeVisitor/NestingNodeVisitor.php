@@ -38,8 +38,8 @@ final class NestingNodeVisitor extends NodeVisitorAbstract
     private int $previousNestingLevel = 0;
 
     public function __construct(
-        private CognitiveComplexityDataCollector $cognitiveComplexityDataCollector,
-        private ComplexityAffectingNodeFinder $complexityAffectingNodeFinder,
+        private readonly CognitiveComplexityDataCollector $cognitiveComplexityDataCollector,
+        private readonly ComplexityAffectingNodeFinder $complexityAffectingNodeFinder,
     ) {
     }
 

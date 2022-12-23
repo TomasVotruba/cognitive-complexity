@@ -14,6 +14,7 @@ use PHPStan\Analyser\Scope;
 use PHPStan\Rules\Rule;
 use TomasVotruba\CognitiveComplexity\AstCognitiveComplexityAnalyzer;
 use TomasVotruba\CognitiveComplexity\Configuration;
+use TomasVotruba\CognitiveComplexity\Exception\ShouldNotHappenException;
 
 /**
  * Based on https://www.sonarsource.com/docs/CognitiveComplexity.pdf
@@ -35,8 +36,8 @@ final class FunctionLikeCognitiveComplexityRule implements Rule
     public const ERROR_MESSAGE = 'Cognitive complexity for "%s" is %d, keep it under %d';
 
     public function __construct(
-        private AstCognitiveComplexityAnalyzer $astCognitiveComplexityAnalyzer,
-        private Configuration $configuration,
+        private readonly AstCognitiveComplexityAnalyzer $astCognitiveComplexityAnalyzer,
+        private readonly Configuration $configuration,
     ) {
     }
 
@@ -100,6 +101,6 @@ final class FunctionLikeCognitiveComplexityRule implements Rule
             return 'arrow function';
         }
 
-        throw new \TomasVotruba\CognitiveComplexity\Exception\ShouldNotHappenException();
+        throw new ShouldNotHappenException();
     }
 }

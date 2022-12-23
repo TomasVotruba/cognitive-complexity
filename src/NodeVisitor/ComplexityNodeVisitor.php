@@ -12,8 +12,8 @@ use TomasVotruba\CognitiveComplexity\NodeAnalyzer\ComplexityAffectingNodeFinder;
 final class ComplexityNodeVisitor extends NodeVisitorAbstract
 {
     public function __construct(
-        private CognitiveComplexityDataCollector $cognitiveComplexityDataCollector,
-        private ComplexityAffectingNodeFinder $complexityAffectingNodeFinder
+        private readonly CognitiveComplexityDataCollector $cognitiveComplexityDataCollector,
+        private readonly ComplexityAffectingNodeFinder $complexityAffectingNodeFinder
     ) {
     }
 
