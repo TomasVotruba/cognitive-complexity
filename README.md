@@ -1,65 +1,38 @@
-# Require Minimal Type Coverage
+# Keep Cognitive Complexity Down
 
 <br>
 
-<div align="center">
-    <img src="/docs/required_type_level.jpg" style="width: 25em" alt="AI abilities sea level rising... as way to rise type coverage for class elements">
-</div>
+Cognitive complexity tells us, how difficult code is to understand by a reader.
 
-<br>
-
-PHPStan uses type declarations to determine the type of variables, properties and other expression. Sometimes it's hard to see what PHPStan errors are the important ones among thousands of others.
-
-Instead of fixing all PHPStan errors at once, we can start with minimal require type coverage.
-
-<br>
-
-What is the type coverage you ask? We have 3 type possible declarations in total here:
+**How is cognitive compleixty measured?**
 
 ```php
-final class ConferenceFactory
-{
-    private $talkFactory;
+function sumOfPrimes($max) {
+    $total = 0;
+    for ($i = 1; $i < $max; ++$i) {     // +1
+        for ($j = 2; $j < $i; ++$j) {   // +2
+            if ($i % $j === 0) {        // +3
+                continue 2;             // +1
+            }
+        }
 
-    public function createConference(array $data)
-    {
-        $talks = $this->talkFactory->create($data);
-
-        return new Conference($talks);
+        $total += $i;
     }
+
+    return $total;
 }
 ```
 
-The param type is defined, but property and return types are missing.
+This function uses nesting, conditions and continue back and forth. It's hard to read and has complexity of 7.
 
-* 1 out of 3 = 33 % coverage
-
-How do we get to the 100 %?
-
-```diff
- final class ConferenceFactory
- {
--    private $talkFactory;
-+    private TalkFactory $talkFactory;
-
--    public function createConference(array $data)
-+    public function createConference(array $data): Conference
-     {
-         $talks = $this->talkFactory->create($data);
-
-         return new Conference($talks);
-     }
- }
-```
-
-This technique is very simple and useful to start with even on legacy project. You also know, how high coverage your project has right now.
+How to keep it down and what else is included in measurements? Check [Is Your Code Readable By Humans?](https://tomasvotruba.com/blog/2018/05/21/is-your-code-readable-by-humans-cognitive-complexity-tells-you/) post to learn it.
 
 <br>
 
 ## Install
 
 ```bash
-composer require tomasvotruba/type-coverage --dev
+composer require tomasvotruba/cognitive-complexity --dev
 ```
 
 The package is available on PHP 7.2-8.1 versions in tagged releases.
@@ -75,9 +48,7 @@ Enable each item on their own with simple configuration:
 ```neon
 # phpstan.neon
 parameters:
-    type_coverage:
-        return_type: 50
-        param_type: 30
-        property_type: 70
-        print_suggestions: false
+    cognitive_complexity:
+        class: 50
+        function: 8
 ```
