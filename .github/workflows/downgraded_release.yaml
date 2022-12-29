@@ -36,7 +36,7 @@ jobs:
             -   run: vendor/bin/rector process src --config build/config/rector-downgrade.php --ansi
 
             # copy metafiles to repository as well
-            -   run: cp -R build/target-repository/. .
+            -   run: cp build/target-repository/composer.json composer.json
             -   run: rm -rf build .github tests stubs ecs.php phpstan.neon phpunit.xml
 
             # setup git user
