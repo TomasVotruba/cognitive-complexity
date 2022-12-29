@@ -29,6 +29,7 @@ jobs:
 
             # 3. downgrade directly
             -   run: vendor/bin/rector process src --config build/config/rector-downgrade.php --ansi
+            -   run: vendor/bin/ecs check src --ansi
 
             # copy metafiles to repository as well
             -   run: cp build/target-repository/composer.json composer.json
