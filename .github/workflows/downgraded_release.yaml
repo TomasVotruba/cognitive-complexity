@@ -18,10 +18,6 @@ jobs:
         steps:
             -
                 uses: "actions/checkout@v2"
-                # this is required for "WyriHaximus/github-action-get-previous-tag" workflow
-                # see https://github.com/actions/checkout#fetch-all-history-for-all-tags-and-branches
-                with:
-                    fetch-depth: 0
 
             -
                 uses: "shivammathur/setup-php@v2"
@@ -29,8 +25,7 @@ jobs:
                     php-version: 8.1
                     coverage: none
 
-            # to have all local tools available
-            -   run: composer update --no-progress --ansi
+            -   uses: "ramsey/composer-install@v2"
 
             # 3. downgrade directly
             -   run: vendor/bin/rector process src --config build/config/rector-downgrade.php --ansi
@@ -47,7 +42,7 @@ jobs:
 
             # publish it to local repository to new branch with a tag
             -
-                name: "Commit Downgraded - tag"
+                name: "Tag Downgraded Code"
                 run: |
                     git commit -a -m "release PHP 7.2 downgraded ${GITHUB_REF#refs/tags/}"
                     git tag "${GITHUB_REF#refs/tags/}.72"
