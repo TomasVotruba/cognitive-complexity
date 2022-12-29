@@ -28,11 +28,11 @@ jobs:
             -   uses: "ramsey/composer-install@v2"
 
             # 3. downgrade directly
-            -   run: vendor/bin/rector process src --config build/config/rector-downgrade.php --ansi
+            -   run: vendor/bin/rector process src --config build/rector-downgrade-php-72.php --ansi
             -   run: vendor/bin/ecs check src --fix --ansi
 
             # copy metafiles to repository as well
-            -   run: cp build/target-repository/composer.json composer.json
+            -   run: cp build/composer-php-72.json composer.json
             -   run: rm -rf build .github tests stubs ecs.php phpstan.neon phpunit.xml
 
             # setup git user
