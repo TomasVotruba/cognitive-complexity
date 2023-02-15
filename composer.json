@@ -3,7 +3,7 @@
     "type": "phpstan-extension",
     "description": "PHPStan rules to measure cognitive complexity of your classes and methods",
     "license": "MIT",
-    "keywords": ["dev"],
+    "keywords": ["dev", "static analysis", "phpstan-extension"],
     "require": {
         "php": "^8.1",
         "phpstan/phpstan": "^1.9.3",
