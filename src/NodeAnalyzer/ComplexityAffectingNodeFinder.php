@@ -88,7 +88,7 @@ final class ComplexityAffectingNodeFinder
     private function isInstanceOf(Node $node, array $types): bool
     {
         foreach ($types as $type) {
-            if (is_a($node, $type, true)) {
+            if ($node instanceof $type) {
                 return true;
             }
         }

@@ -87,7 +87,7 @@ final class NestingNodeVisitor extends NodeVisitorAbstract
     private function isNestingNode(Node $node): bool
     {
         foreach (self::NESTING_NODE_TYPES as $nestingNodeType) {
-            if (is_a($node, $nestingNodeType, true)) {
+            if ($node instanceof $nestingNodeType) {
                 return true;
             }
         }
