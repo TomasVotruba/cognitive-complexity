@@ -9,9 +9,6 @@ use PHPStan\Rules\Rule;
 use PHPStan\Testing\RuleTestCase;
 use TomasVotruba\CognitiveComplexity\Rules\ClassLikeCognitiveComplexityRule;
 
-/**
- * @extends RuleTestCase<ClassLikeCognitiveComplexityRule>
- */
 final class ClassLikeCognitiveComplexityRuleTest extends RuleTestCase
 {
     /**

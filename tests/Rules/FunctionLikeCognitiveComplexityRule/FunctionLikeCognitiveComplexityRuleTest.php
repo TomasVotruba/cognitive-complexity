@@ -11,9 +11,6 @@ use TomasVotruba\CognitiveComplexity\Rules\FunctionLikeCognitiveComplexityRule;
 use TomasVotruba\CognitiveComplexity\Tests\Rules\FunctionLikeCognitiveComplexityRule\Fixture\ClassMethodOverComplicated;
 use TomasVotruba\CognitiveComplexity\Tests\Rules\FunctionLikeCognitiveComplexityRule\Fixture\VideoRepository;
 
-/**
- * @extends RuleTestCase<FunctionLikeCognitiveComplexityRule>
- */
 final class FunctionLikeCognitiveComplexityRuleTest extends RuleTestCase
 {
     /**
