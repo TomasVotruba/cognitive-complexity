@@ -1,2 +1,8 @@
 includes:
     - ../../../../config/extension.neon
+
+
+parameters:
+    cognitive_complexity:
+        class: 50
+
