@@ -7,8 +7,8 @@ parametersSchema:
 # default parameters
 parameters:
     cognitive_complexity:
-        class: 50
-        function: 8
+        class: 40
+        function: 9
 
 services:
     - TomasVotruba\CognitiveComplexity\DataCollector\CognitiveComplexityDataCollector
