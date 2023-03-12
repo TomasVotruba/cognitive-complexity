@@ -11,10 +11,24 @@ use TomasVotruba\CognitiveComplexity\NodeAnalyzer\ComplexityAffectingNodeFinder;
 
 final class ComplexityNodeVisitor extends NodeVisitorAbstract
 {
+    /**
+     * @readonly
+     * @var \TomasVotruba\CognitiveComplexity\DataCollector\CognitiveComplexityDataCollector
+     */
+    private $cognitiveComplexityDataCollector;
+
+    /**
+     * @readonly
+     * @var \TomasVotruba\CognitiveComplexity\NodeAnalyzer\ComplexityAffectingNodeFinder
+     */
+    private $complexityAffectingNodeFinder;
+
     public function __construct(
-        private readonly CognitiveComplexityDataCollector $cognitiveComplexityDataCollector,
-        private readonly ComplexityAffectingNodeFinder $complexityAffectingNodeFinder
+        CognitiveComplexityDataCollector $cognitiveComplexityDataCollector,
+        ComplexityAffectingNodeFinder $complexityAffectingNodeFinder
     ) {
+        $this->cognitiveComplexityDataCollector = $cognitiveComplexityDataCollector;
+        $this->complexityAffectingNodeFinder = $complexityAffectingNodeFinder;
     }
 
     public function enterNode(Node $node): ?Node
