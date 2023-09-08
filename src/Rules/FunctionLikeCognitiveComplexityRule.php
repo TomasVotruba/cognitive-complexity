@@ -32,6 +32,7 @@ use TomasVotruba\CognitiveComplexity\Exception\ShouldNotHappenException;
 final class FunctionLikeCognitiveComplexityRule implements Rule
 {
     /**
+     * @api used in tests
      * @var string
      */
     public const ERROR_MESSAGE = 'Cognitive complexity for "%s" is %d, keep it under %d';
