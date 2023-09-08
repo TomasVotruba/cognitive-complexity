@@ -23,10 +23,22 @@ final class ClassLikeCognitiveComplexityRule implements Rule
      */
     public const ERROR_MESSAGE = 'Class cognitive complexity is %d, keep it under %d';
 
-    public function __construct(
-        private readonly AstCognitiveComplexityAnalyzer $astCognitiveComplexityAnalyzer,
-        private readonly Configuration $configuration
-    ) {
+    /**
+     * @readonly
+     * @var \TomasVotruba\CognitiveComplexity\AstCognitiveComplexityAnalyzer
+     */
+    private $astCognitiveComplexityAnalyzer;
+
+    /**
+     * @readonly
+     * @var \TomasVotruba\CognitiveComplexity\Configuration
+     */
+    private $configuration;
+
+    public function __construct(AstCognitiveComplexityAnalyzer $astCognitiveComplexityAnalyzer, Configuration $configuration)
+    {
+        $this->astCognitiveComplexityAnalyzer = $astCognitiveComplexityAnalyzer;
+        $this->configuration = $configuration;
     }
 
     /**
