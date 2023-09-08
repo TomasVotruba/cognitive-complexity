@@ -11,6 +11,7 @@ use PhpParser\Node\FunctionLike;
 use PhpParser\Node\Stmt\ClassMethod;
 use PhpParser\Node\Stmt\Function_;
 use PHPStan\Analyser\Scope;
+use PHPStan\Reflection\ClassReflection;
 use PHPStan\Rules\Rule;
 use TomasVotruba\CognitiveComplexity\AstCognitiveComplexityAnalyzer;
 use TomasVotruba\CognitiveComplexity\Configuration;
@@ -86,7 +87,7 @@ final class FunctionLikeCognitiveComplexityRule implements Rule
             $name = '';
 
             $classReflection = $scope->getClassReflection();
-            if ($classReflection !== null) {
+            if ($classReflection instanceof ClassReflection) {
                 $name = $classReflection->getName() . '::';
             }
 

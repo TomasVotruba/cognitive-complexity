@@ -7,20 +7,21 @@ namespace TomasVotruba\CognitiveComplexity\Tests\Rules\ClassLikeCognitiveComplex
 use Iterator;
 use PHPStan\Rules\Rule;
 use PHPStan\Testing\RuleTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 use TomasVotruba\CognitiveComplexity\Rules\ClassLikeCognitiveComplexityRule;
 
 final class ClassLikeCognitiveComplexityRuleTest extends RuleTestCase
 {
     /**
-     * @dataProvider provideDataForTest()
      * @param mixed[] $expectedErrorMessagesWithLines
      */
+    #[DataProvider('provideDataForTest')]
     public function test(string $filePath, array $expectedErrorMessagesWithLines): void
     {
         $this->analyse([$filePath], $expectedErrorMessagesWithLines);
     }
 
-    public function provideDataForTest(): Iterator
+    public static function provideDataForTest(): Iterator
     {
         $errorMessage = sprintf(ClassLikeCognitiveComplexityRule::ERROR_MESSAGE, 54, 50);
         yield [__DIR__ . '/Fixture/ClassWithManyComplexMethods.php', [[$errorMessage, 7]]];

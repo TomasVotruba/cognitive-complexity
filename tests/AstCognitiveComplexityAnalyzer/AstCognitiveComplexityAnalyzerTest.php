@@ -12,6 +12,7 @@ use PhpParser\Node\Stmt\Function_;
 use PhpParser\NodeFinder;
 use PhpParser\ParserFactory;
 use PHPStan\DependencyInjection\ContainerFactory;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use TomasVotruba\CognitiveComplexity\AstCognitiveComplexityAnalyzer;
 use TomasVotruba\CognitiveComplexity\Exception\ShouldNotHappenException;
@@ -30,9 +31,7 @@ final class AstCognitiveComplexityAnalyzerTest extends TestCase
         $this->astCognitiveComplexityAnalyzer = $container->getByType(AstCognitiveComplexityAnalyzer::class);
     }
 
-    /**
-     * @dataProvider provideTokensAndExpectedCognitiveComplexity()
-     */
+    #[DataProvider('provideTokensAndExpectedCognitiveComplexity')]
     public function test(string $filePath, int $expectedCognitiveComlexity): void
     {
         $fileContents = FileSystem::read($filePath);
@@ -43,7 +42,7 @@ final class AstCognitiveComplexityAnalyzerTest extends TestCase
         $this->assertSame($expectedCognitiveComlexity, $cognitiveComplexity);
     }
 
-    public function provideTokensAndExpectedCognitiveComplexity(): Iterator
+    public static function provideTokensAndExpectedCognitiveComplexity(): Iterator
     {
         yield [__DIR__ . '/Fixture/function_9.php.inc', 9];
         yield [__DIR__ . '/Fixture/function_6.php.inc', 6];
