@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace TomasVotruba\CognitiveComplexity\Tests\AstCognitiveComplexityAnalyzer;
 
 use Iterator;
-use Nette\Utils\FileSystem;
 use PhpParser\Node;
 use PhpParser\Node\Stmt\ClassMethod;
 use PhpParser\Node\Stmt\Function_;
@@ -34,7 +33,8 @@ final class AstCognitiveComplexityAnalyzerTest extends TestCase
     #[DataProvider('provideTokensAndExpectedCognitiveComplexity')]
     public function test(string $filePath, int $expectedCognitiveComlexity): void
     {
-        $fileContents = FileSystem::read($filePath);
+        /** @var string $fileContents */
+        $fileContents = file_get_contents($filePath);
 
         $functionLike = $this->parseFileToFirstFunctionLike($fileContents);
         $cognitiveComplexity = $this->astCognitiveComplexityAnalyzer->analyzeFunctionLike($functionLike);
