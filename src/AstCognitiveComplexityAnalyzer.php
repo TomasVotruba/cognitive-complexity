@@ -16,12 +16,12 @@ use TomasVotruba\CognitiveComplexity\NodeVisitor\NestingNodeVisitor;
  *
  * implements the concept described in https://www.sonarsource.com/resources/white-papers/cognitive-complexity/
  */
-final class AstCognitiveComplexityAnalyzer
+final readonly class AstCognitiveComplexityAnalyzer
 {
     public function __construct(
-        private readonly ComplexityNodeTraverserFactory $complexityNodeTraverserFactory,
-        private readonly CognitiveComplexityDataCollector $cognitiveComplexityDataCollector,
-        private readonly NestingNodeVisitor $nestingNodeVisitor
+        private ComplexityNodeTraverserFactory $complexityNodeTraverserFactory,
+        private CognitiveComplexityDataCollector $cognitiveComplexityDataCollector,
+        private NestingNodeVisitor $nestingNodeVisitor
     ) {
     }
 

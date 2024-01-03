@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace TomasVotruba\CognitiveComplexity;
 
-final class Configuration
+final readonly class Configuration
 {
     /**
      * @param array<string, mixed> $parameters
      */
     public function __construct(
-        private readonly array $parameters
+        private array $parameters
     ) {
     }
 
@@ -22,5 +22,23 @@ final class Configuration
     public function getMaxFunctionCognitiveComplexity(): int
     {
         return $this->parameters['function'];
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getDependencyTreeTypes(): array
+    {
+        return $this->parameters['dependency_tree_types'] ?? [];
+    }
+
+    public function getMaxDependencyTreeComplexity(): int
+    {
+        return $this->parameters['dependency_tree'];
+    }
+
+    public function isDependencyTreeEnabled(): bool
+    {
+        return $this->getDependencyTreeTypes() !== [];
     }
 }

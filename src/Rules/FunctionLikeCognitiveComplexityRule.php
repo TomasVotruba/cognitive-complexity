@@ -29,7 +29,7 @@ use TomasVotruba\CognitiveComplexity\Exception\ShouldNotHappenException;
  *
  * @see \TomasVotruba\CognitiveComplexity\Tests\Rules\FunctionLikeCognitiveComplexityRule\FunctionLikeCognitiveComplexityRuleTest
  */
-final class FunctionLikeCognitiveComplexityRule implements Rule
+final readonly class FunctionLikeCognitiveComplexityRule implements Rule
 {
     /**
      * @api used in tests
@@ -38,8 +38,8 @@ final class FunctionLikeCognitiveComplexityRule implements Rule
     public const ERROR_MESSAGE = 'Cognitive complexity for "%s" is %d, keep it under %d';
 
     public function __construct(
-        private readonly AstCognitiveComplexityAnalyzer $astCognitiveComplexityAnalyzer,
-        private readonly Configuration $configuration,
+        private AstCognitiveComplexityAnalyzer $astCognitiveComplexityAnalyzer,
+        private Configuration $configuration,
     ) {
     }
 
