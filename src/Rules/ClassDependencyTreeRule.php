@@ -22,18 +22,36 @@ use TomasVotruba\CognitiveComplexity\Configuration;
  *
  * Find classes with complex constructor dependency tree = current class complexity + complexity of all __construct() dependencies.
  */
-final readonly class ClassDependencyTreeRule implements Rule
+final class ClassDependencyTreeRule implements Rule
 {
     /**
      * @var string
      */
     public const ERROR_MESSAGE = 'Dependency tree complexity %d is over %d. Refactor __construct() dependencies or split up.';
 
-    public function __construct(
-        private AstCognitiveComplexityAnalyzer $astCognitiveComplexityAnalyzer,
-        private ClassReflectionParser $classReflectionParser,
-        private Configuration $configuration
-    ) {
+    /**
+     * @readonly
+     * @var \TomasVotruba\CognitiveComplexity\AstCognitiveComplexityAnalyzer
+     */
+    private $astCognitiveComplexityAnalyzer;
+
+    /**
+     * @readonly
+     * @var \TomasVotruba\CognitiveComplexity\ClassReflectionParser
+     */
+    private $classReflectionParser;
+
+    /**
+     * @readonly
+     * @var \TomasVotruba\CognitiveComplexity\Configuration
+     */
+    private $configuration;
+
+    public function __construct(AstCognitiveComplexityAnalyzer $astCognitiveComplexityAnalyzer, ClassReflectionParser $classReflectionParser, Configuration $configuration)
+    {
+        $this->astCognitiveComplexityAnalyzer = $astCognitiveComplexityAnalyzer;
+        $this->classReflectionParser = $classReflectionParser;
+        $this->configuration = $configuration;
     }
 
     public function getNodeType(): string

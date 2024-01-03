@@ -1,7 +1,0 @@
-includes:
-    - ../../../../config/extension.neon
-
-parameters:
-    cognitive_complexity:
-        function: 8
-

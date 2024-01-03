@@ -6,15 +6,22 @@ namespace TomasVotruba\CognitiveComplexity;
 
 use PhpParser\Node\Stmt\Class_;
 use PhpParser\NodeFinder;
-use PhpParser\Parser;
 use PhpParser\ParserFactory;
 use PHPStan\Reflection\ClassReflection;
 
-final readonly class ClassReflectionParser
+final class ClassReflectionParser
 {
-    private Parser $phpParser;
+    /**
+     * @readonly
+     * @var \PhpParser\Parser
+     */
+    private $phpParser;
 
-    private NodeFinder $nodeFinder;
+    /**
+     * @readonly
+     * @var \PhpParser\NodeFinder
+     */
+    private $nodeFinder;
 
     public function __construct()
     {
