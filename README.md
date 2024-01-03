@@ -54,3 +54,30 @@ parameters:
         class: 50
         function: 8
 ```
+
+<br>
+
+## Detect complex Class Dependency Trees
+
+In classes like controllers, Rector rules, PHPStan rules or other services of specific type, the complexity can be hidden in the __construct() dependencies. Simple class with 10 dependencies is more complex than complex class with 2 dependencies.
+
+That's why there is a rule to detect these dependency trees. It checks:
+
+* complexity of **current class**
+* **constructor dependencies and their class complexity** together
+
+Final number is compared and used as a final complexity:
+
+```neon
+# phpstan.neon
+parameters:
+    cognitive_complexity:
+        dependency_tree: 150
+        dependency_tree_types:
+            # only these explicit types are checked, nothing else
+            - Rector\Contract\Rector\RectorInterface
+```
+
+<br>
+
+Happy coding!

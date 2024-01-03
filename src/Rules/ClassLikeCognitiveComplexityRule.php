@@ -15,7 +15,7 @@ use TomasVotruba\CognitiveComplexity\Configuration;
 /**
  * @see \TomasVotruba\CognitiveComplexity\Tests\Rules\ClassLikeCognitiveComplexityRule\ClassLikeCognitiveComplexityRuleTest
  */
-final class ClassLikeCognitiveComplexityRule implements Rule
+final readonly class ClassLikeCognitiveComplexityRule implements Rule
 {
     /**
      * @api used in tests
@@ -24,8 +24,8 @@ final class ClassLikeCognitiveComplexityRule implements Rule
     public const ERROR_MESSAGE = 'Class cognitive complexity is %d, keep it under %d';
 
     public function __construct(
-        private readonly AstCognitiveComplexityAnalyzer $astCognitiveComplexityAnalyzer,
-        private readonly Configuration $configuration
+        private AstCognitiveComplexityAnalyzer $astCognitiveComplexityAnalyzer,
+        private Configuration $configuration
     ) {
     }
 
