@@ -12,6 +12,7 @@ use PHPStan\Reflection\ClassReflection;
 use PHPStan\Reflection\ParameterReflection;
 use PHPStan\Reflection\ParametersAcceptorSelector;
 use PHPStan\Rules\Rule;
+use PHPStan\Rules\RuleErrorBuilder;
 use PHPStan\Type\TypeWithClassName;
 use TomasVotruba\CognitiveComplexity\AstCognitiveComplexityAnalyzer;
 use TomasVotruba\CognitiveComplexity\ClassReflectionParser;
@@ -89,13 +90,13 @@ final readonly class ClassDependencyTreeRule implements Rule
             return [];
         }
 
-        return [
-            sprintf(
-                self::ERROR_MESSAGE,
-                $totaDependencyTreeComplexity,
-                $this->configuration->getMaxDependencyTreeComplexity()
-            ),
-        ];
+        $message = sprintf(
+            self::ERROR_MESSAGE,
+            $totaDependencyTreeComplexity,
+            $this->configuration->getMaxDependencyTreeComplexity()
+        );
+
+        return [RuleErrorBuilder::message($message)->identifier('complexity.dependencyTree')->build()];
     }
 
     private function isTypeToAnalyse(ClassReflection $classReflection): bool
