@@ -12,6 +12,7 @@ use PHPStan\Reflection\ClassReflection;
 use PHPStan\Reflection\ParameterReflection;
 use PHPStan\Reflection\ParametersAcceptorSelector;
 use PHPStan\Rules\Rule;
+use PHPStan\Rules\RuleErrorBuilder;
 use PHPStan\Type\TypeWithClassName;
 use TomasVotruba\CognitiveComplexity\AstCognitiveComplexityAnalyzer;
 use TomasVotruba\CognitiveComplexity\ClassReflectionParser;
@@ -89,13 +90,13 @@ final readonly class ClassDependencyTreeRule implements Rule
             return [];
         }
 
-        return [
-            sprintf(
-                self::ERROR_MESSAGE,
-                $totaDependencyTreeComplexity,
-                $this->configuration->getMaxDependencyTreeComplexity()
-            ),
-        ];
+        $message = sprintf(
+            self::ERROR_MESSAGE,
+            $totaDependencyTreeComplexity,
+            $this->configuration->getMaxDependencyTreeComplexity()
+        );
+
+        return [RuleErrorBuilder::message($message)->identifier('complexity.dependencyTree')->build()];
     }
 
     private function isTypeToAnalyse(ClassReflection $classReflection): bool
@@ -112,15 +113,12 @@ final readonly class ClassDependencyTreeRule implements Rule
     private function resolveParameterTypeClass(ParameterReflection $parameterReflection): ?Class_
     {
         $parameterType = $parameterReflection->getType();
-        if (! $parameterType instanceof TypeWithClassName) {
+        $classReflections = $parameterType->getObjectClassReflections();
+        // XXX add support for union types
+        if (count($classReflections) !== 1) {
             return null;
         }
 
-        $parameterClassReflection = $parameterType->getClassReflection();
-        if (! $parameterClassReflection instanceof ClassReflection) {
-            return null;
-        }
-
-        return $this->classReflectionParser->parse($parameterClassReflection);
+        return $this->classReflectionParser->parse($classReflections[0]);
     }
 }

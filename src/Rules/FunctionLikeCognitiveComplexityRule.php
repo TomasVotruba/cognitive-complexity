@@ -13,6 +13,7 @@ use PhpParser\Node\Stmt\Function_;
 use PHPStan\Analyser\Scope;
 use PHPStan\Reflection\ClassReflection;
 use PHPStan\Rules\Rule;
+use PHPStan\Rules\RuleErrorBuilder;
 use TomasVotruba\CognitiveComplexity\AstCognitiveComplexityAnalyzer;
 use TomasVotruba\CognitiveComplexity\Configuration;
 use TomasVotruba\CognitiveComplexity\Exception\ShouldNotHappenException;
@@ -53,7 +54,6 @@ final readonly class FunctionLikeCognitiveComplexityRule implements Rule
 
     /**
      * @param FunctionLike $node
-     * @return string[]
      */
     public function processNode(Node $node, Scope $scope): array
     {
@@ -75,7 +75,7 @@ final readonly class FunctionLikeCognitiveComplexityRule implements Rule
             $this->configuration->getMaxFunctionCognitiveComplexity()
         );
 
-        return [$message];
+        return [RuleErrorBuilder::message($message)->identifier('complexity.functionLike')->build()];
     }
 
     private function resolveFunctionName(FunctionLike $functionLike, Scope $scope): string

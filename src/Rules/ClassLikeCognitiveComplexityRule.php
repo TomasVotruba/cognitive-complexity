@@ -9,6 +9,7 @@ use PhpParser\Node\Stmt\Class_;
 use PHPStan\Analyser\Scope;
 use PHPStan\Node\InClassNode;
 use PHPStan\Rules\Rule;
+use PHPStan\Rules\RuleErrorBuilder;
 use TomasVotruba\CognitiveComplexity\AstCognitiveComplexityAnalyzer;
 use TomasVotruba\CognitiveComplexity\Configuration;
 
@@ -39,7 +40,6 @@ final readonly class ClassLikeCognitiveComplexityRule implements Rule
 
     /**
      * @param InClassNode $node
-     * @return string[]
      */
     public function processNode(Node $node, Scope $scope): array
     {
@@ -59,6 +59,6 @@ final readonly class ClassLikeCognitiveComplexityRule implements Rule
             $this->configuration->getMaxClassCognitiveComplexity()
         );
 
-        return [$message];
+        return [RuleErrorBuilder::message($message)->identifier('complexity.classLike')->build()];
     }
 }
