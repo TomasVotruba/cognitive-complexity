@@ -113,15 +113,12 @@ final readonly class ClassDependencyTreeRule implements Rule
     private function resolveParameterTypeClass(ParameterReflection $parameterReflection): ?Class_
     {
         $parameterType = $parameterReflection->getType();
-        if (! $parameterType instanceof TypeWithClassName) {
+        $classReflections = $parameterType->getObjectClassReflections();
+        // XXX add support for union types
+        if (count($classReflections) !== 1) {
             return null;
         }
 
-        $parameterClassReflection = $parameterType->getClassReflection();
-        if (! $parameterClassReflection instanceof ClassReflection) {
-            return null;
-        }
-
-        return $this->classReflectionParser->parse($parameterClassReflection);
+        return $this->classReflectionParser->parse($classReflections[0]);
     }
 }
