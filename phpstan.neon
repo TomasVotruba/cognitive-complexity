@@ -19,6 +19,7 @@ parameters:
 
     ignoreErrors:
         - identifier: missingType.generics
+        - identifier: instanceof.alwaysTrue
 
         # skip as always string
         - '#Parameter \#1 \$currentWorkingDirectory of class PHPStan\\DependencyInjection\\ContainerFactory constructor expects string, string\|false given#'

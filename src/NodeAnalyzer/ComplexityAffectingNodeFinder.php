@@ -72,7 +72,7 @@ final class ComplexityAffectingNodeFinder
         if ($this->isInstanceOf($node, self::BREAKING_NODE_TYPES)) {
             // skip empty breaks
             /** @var Goto_|Break_|Continue_ $node */
-            if ($node instanceof Goto_ && $node->name instanceof Identifier) {
+            if ($node instanceof Goto_) {
                 return true;
             }
 
