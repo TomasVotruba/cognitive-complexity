@@ -16,6 +16,7 @@ use PHPStan\Rules\Rule;
 use PHPStan\Rules\RuleErrorBuilder;
 use TomasVotruba\CognitiveComplexity\AstCognitiveComplexityAnalyzer;
 use TomasVotruba\CognitiveComplexity\Configuration;
+use TomasVotruba\CognitiveComplexity\Enum\RuleIdentifier;
 use TomasVotruba\CognitiveComplexity\Exception\ShouldNotHappenException;
 
 /**
@@ -32,11 +33,7 @@ use TomasVotruba\CognitiveComplexity\Exception\ShouldNotHappenException;
  */
 final readonly class FunctionLikeCognitiveComplexityRule implements Rule
 {
-    /**
-     * @api used in tests
-     * @var string
-     */
-    public const ERROR_MESSAGE = 'Cognitive complexity for "%s" is %d, keep it under %d';
+    public const string ERROR_MESSAGE = 'Cognitive complexity for "%s" is %d, keep it under %d';
 
     public function __construct(
         private AstCognitiveComplexityAnalyzer $astCognitiveComplexityAnalyzer,
@@ -75,7 +72,7 @@ final readonly class FunctionLikeCognitiveComplexityRule implements Rule
             $this->configuration->getMaxFunctionCognitiveComplexity()
         );
 
-        return [RuleErrorBuilder::message($message)->identifier('complexity.functionLike')->build()];
+        return [RuleErrorBuilder::message($message)->identifier(RuleIdentifier::FUNCTION_COMPLEXITY)->build()];
     }
 
     private function resolveFunctionName(FunctionLike $functionLike, Scope $scope): string

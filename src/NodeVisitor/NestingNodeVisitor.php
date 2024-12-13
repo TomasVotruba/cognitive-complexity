@@ -22,7 +22,7 @@ final class NestingNodeVisitor extends NodeVisitorAbstract
     /**
      * @var array<class-string<Node>>
      */
-    private const NESTING_NODE_TYPES = [
+    private const array NESTING_NODE_TYPES = [
         If_::class,
         For_::class,
         While_::class,
