@@ -31,14 +31,27 @@ use TomasVotruba\CognitiveComplexity\Exception\ShouldNotHappenException;
  *
  * @see \TomasVotruba\CognitiveComplexity\Tests\Rules\FunctionLikeCognitiveComplexityRule\FunctionLikeCognitiveComplexityRuleTest
  */
-final readonly class FunctionLikeCognitiveComplexityRule implements Rule
+final class FunctionLikeCognitiveComplexityRule implements Rule
 {
-    public const string ERROR_MESSAGE = 'Cognitive complexity for "%s" is %d, keep it under %d';
+    /**
+     * @var string
+     */
+    public const ERROR_MESSAGE = 'Cognitive complexity for "%s" is %d, keep it under %d';
 
-    public function __construct(
-        private AstCognitiveComplexityAnalyzer $astCognitiveComplexityAnalyzer,
-        private Configuration $configuration,
-    ) {
+    /**
+     * @readonly
+     */
+    private AstCognitiveComplexityAnalyzer $astCognitiveComplexityAnalyzer;
+
+    /**
+     * @readonly
+     */
+    private Configuration $configuration;
+
+    public function __construct(AstCognitiveComplexityAnalyzer $astCognitiveComplexityAnalyzer, Configuration $configuration)
+    {
+        $this->astCognitiveComplexityAnalyzer = $astCognitiveComplexityAnalyzer;
+        $this->configuration = $configuration;
     }
 
     /**

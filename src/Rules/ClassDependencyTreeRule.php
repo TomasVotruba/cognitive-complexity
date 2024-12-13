@@ -23,15 +23,33 @@ use TomasVotruba\CognitiveComplexity\Enum\RuleIdentifier;
  *
  * Find classes with complex constructor dependency tree = current class complexity + complexity of all __construct() dependencies.
  */
-final readonly class ClassDependencyTreeRule implements Rule
+final class ClassDependencyTreeRule implements Rule
 {
-    public const string ERROR_MESSAGE = 'Dependency tree complexity %d is over %d. Refactor __construct() dependencies or split up.';
+    /**
+     * @var string
+     */
+    public const ERROR_MESSAGE = 'Dependency tree complexity %d is over %d. Refactor __construct() dependencies or split up.';
 
-    public function __construct(
-        private AstCognitiveComplexityAnalyzer $astCognitiveComplexityAnalyzer,
-        private ClassReflectionParser $classReflectionParser,
-        private Configuration $configuration
-    ) {
+    /**
+     * @readonly
+     */
+    private AstCognitiveComplexityAnalyzer $astCognitiveComplexityAnalyzer;
+
+    /**
+     * @readonly
+     */
+    private ClassReflectionParser $classReflectionParser;
+
+    /**
+     * @readonly
+     */
+    private Configuration $configuration;
+
+    public function __construct(AstCognitiveComplexityAnalyzer $astCognitiveComplexityAnalyzer, ClassReflectionParser $classReflectionParser, Configuration $configuration)
+    {
+        $this->astCognitiveComplexityAnalyzer = $astCognitiveComplexityAnalyzer;
+        $this->classReflectionParser = $classReflectionParser;
+        $this->configuration = $configuration;
     }
 
     public function getNodeType(): string

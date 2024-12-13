@@ -22,7 +22,7 @@ final class NestingNodeVisitor extends NodeVisitorAbstract
     /**
      * @var array<class-string<Node>>
      */
-    private const array NESTING_NODE_TYPES = [
+    private const NESTING_NODE_TYPES = [
         If_::class,
         For_::class,
         While_::class,
@@ -33,14 +33,24 @@ final class NestingNodeVisitor extends NodeVisitorAbstract
         Ternary::class,
     ];
 
+    /**
+     * @readonly
+     */
+    private CognitiveComplexityDataCollector $cognitiveComplexityDataCollector;
+
+    /**
+     * @readonly
+     */
+    private ComplexityAffectingNodeFinder $complexityAffectingNodeFinder;
+
     private int $measuredNestingLevel = 1;
 
     private int $previousNestingLevel = 0;
 
-    public function __construct(
-        private readonly CognitiveComplexityDataCollector $cognitiveComplexityDataCollector,
-        private readonly ComplexityAffectingNodeFinder $complexityAffectingNodeFinder,
-    ) {
+    public function __construct(CognitiveComplexityDataCollector $cognitiveComplexityDataCollector, ComplexityAffectingNodeFinder $complexityAffectingNodeFinder)
+    {
+        $this->cognitiveComplexityDataCollector = $cognitiveComplexityDataCollector;
+        $this->complexityAffectingNodeFinder = $complexityAffectingNodeFinder;
     }
 
     public function reset(): void
