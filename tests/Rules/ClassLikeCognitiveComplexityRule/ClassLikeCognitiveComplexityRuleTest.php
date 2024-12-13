@@ -13,7 +13,7 @@ use TomasVotruba\CognitiveComplexity\Rules\ClassLikeCognitiveComplexityRule;
 final class ClassLikeCognitiveComplexityRuleTest extends RuleTestCase
 {
     /**
-     * @param mixed[] $expectedErrorMessagesWithLines
+     * @param list<array{0: string, 1: int, 2?: string|null}> $expectedErrorMessagesWithLines
      */
     #[DataProvider('provideDataForTest')]
     public function test(string $filePath, array $expectedErrorMessagesWithLines): void
