@@ -8,7 +8,6 @@ use PhpParser\Node\Stmt\Class_;
 use PhpParser\NodeFinder;
 use PhpParser\Parser;
 use PhpParser\ParserFactory;
-use PhpParser\PhpVersion;
 use PHPStan\Reflection\ClassReflection;
 
 final readonly class ClassReflectionParser
@@ -20,7 +19,7 @@ final readonly class ClassReflectionParser
     public function __construct()
     {
         $parserFactory = new ParserFactory();
-        $this->phpParser = $parserFactory->createForVersion(PhpVersion::fromString('7.0'));
+        $this->phpParser = $parserFactory->createForHostVersion();
 
         $this->nodeFinder = new NodeFinder();
     }

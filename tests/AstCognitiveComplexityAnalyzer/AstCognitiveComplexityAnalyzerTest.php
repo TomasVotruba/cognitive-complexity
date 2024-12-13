@@ -10,7 +10,6 @@ use PhpParser\Node\Stmt\ClassMethod;
 use PhpParser\Node\Stmt\Function_;
 use PhpParser\NodeFinder;
 use PhpParser\ParserFactory;
-use PhpParser\PhpVersion;
 use PHPStan\DependencyInjection\ContainerFactory;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
@@ -57,7 +56,7 @@ final class AstCognitiveComplexityAnalyzerTest extends TestCase
     private function parseFileToFirstFunctionLike(string $fileContent): ClassMethod | Function_
     {
         $parserFactory = new ParserFactory();
-        $parser = $parserFactory->createForVersion(PhpVersion::fromString('7.0'));
+        $parser = $parserFactory->createForHostVersion();
         $nodes = $parser->parse($fileContent);
 
         $nodeFinder = new NodeFinder();
