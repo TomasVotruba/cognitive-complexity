@@ -70,7 +70,9 @@ final readonly class ClassDependencyTreeRule implements Rule
 
         $extendedMethodReflection = $classReflection->getConstructor();
 
-        $parametersAcceptorWithPhpDocs = ParametersAcceptorSelector::selectSingle(
+        $parametersAcceptorWithPhpDocs = ParametersAcceptorSelector::selectFromArgs(
+            $scope,
+            [],
             $extendedMethodReflection->getVariants()
         );
 
