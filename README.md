@@ -37,7 +37,7 @@ How to keep **cognitive complexity on 1**? Read [Keep Cognitive Complexity Low w
 composer require tomasvotruba/cognitive-complexity --dev
 ```
 
-The package is available on PHP 7.2-8.1 versions in tagged releases.
+The package is available on PHP 7.4-8.1 versions in tagged releases.
 
 <br>
 
