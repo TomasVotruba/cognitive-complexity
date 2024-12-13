@@ -4,7 +4,7 @@
     "description": "PHPStan rules to measure cognitive complexity of your classes and methods",
     "license": "MIT",
     "require": {
-        "php": "^8.2",
+        "php": "^8.3",
         "phpstan/phpstan": "^2.0",
         "nikic/php-parser": "^5.3"
     },

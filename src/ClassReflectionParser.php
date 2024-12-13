@@ -39,11 +39,6 @@ final readonly class ClassReflectionParser
             return null;
         }
 
-        $foundClass = $this->nodeFinder->findFirstInstanceOf($stmts, Class_::class);
-        if (! $foundClass instanceof Class_) {
-            return null;
-        }
-
-        return $foundClass;
+        return $this->nodeFinder->findFirstInstanceOf($stmts, Class_::class);
     }
 }

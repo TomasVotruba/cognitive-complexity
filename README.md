@@ -68,7 +68,7 @@ That's why there is a rule to detect these dependency trees. It checks:
 
 Final number is compared and used as a final complexity:
 
-```neon
+```yaml
 # phpstan.neon
 parameters:
     cognitive_complexity:

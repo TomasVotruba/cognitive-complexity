@@ -12,17 +12,14 @@ use PHPStan\Rules\Rule;
 use PHPStan\Rules\RuleErrorBuilder;
 use TomasVotruba\CognitiveComplexity\AstCognitiveComplexityAnalyzer;
 use TomasVotruba\CognitiveComplexity\Configuration;
+use TomasVotruba\CognitiveComplexity\Enum\RuleIdentifier;
 
 /**
  * @see \TomasVotruba\CognitiveComplexity\Tests\Rules\ClassLikeCognitiveComplexityRule\ClassLikeCognitiveComplexityRuleTest
  */
 final readonly class ClassLikeCognitiveComplexityRule implements Rule
 {
-    /**
-     * @api used in tests
-     * @var string
-     */
-    public const ERROR_MESSAGE = 'Class cognitive complexity is %d, keep it under %d';
+    public const string ERROR_MESSAGE = 'Class cognitive complexity is %d, keep it under %d';
 
     public function __construct(
         private AstCognitiveComplexityAnalyzer $astCognitiveComplexityAnalyzer,
@@ -59,6 +56,6 @@ final readonly class ClassLikeCognitiveComplexityRule implements Rule
             $this->configuration->getMaxClassCognitiveComplexity()
         );
 
-        return [RuleErrorBuilder::message($message)->identifier('complexity.classLike')->build()];
+        return [RuleErrorBuilder::message($message)->identifier(RuleIdentifier::CLASS_LIKE_COMPLEXITY)->build()];
     }
 }

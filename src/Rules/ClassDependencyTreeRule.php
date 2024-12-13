@@ -16,6 +16,7 @@ use PHPStan\Rules\RuleErrorBuilder;
 use TomasVotruba\CognitiveComplexity\AstCognitiveComplexityAnalyzer;
 use TomasVotruba\CognitiveComplexity\ClassReflectionParser;
 use TomasVotruba\CognitiveComplexity\Configuration;
+use TomasVotruba\CognitiveComplexity\Enum\RuleIdentifier;
 
 /**
  * @implements Rule<InClassNode>
@@ -24,10 +25,7 @@ use TomasVotruba\CognitiveComplexity\Configuration;
  */
 final readonly class ClassDependencyTreeRule implements Rule
 {
-    /**
-     * @var string
-     */
-    public const ERROR_MESSAGE = 'Dependency tree complexity %d is over %d. Refactor __construct() dependencies or split up.';
+    public const string ERROR_MESSAGE = 'Dependency tree complexity %d is over %d. Refactor __construct() dependencies or split up.';
 
     public function __construct(
         private AstCognitiveComplexityAnalyzer $astCognitiveComplexityAnalyzer,
@@ -97,7 +95,7 @@ final readonly class ClassDependencyTreeRule implements Rule
             $this->configuration->getMaxDependencyTreeComplexity()
         );
 
-        return [RuleErrorBuilder::message($message)->identifier('complexity.dependencyTree')->build()];
+        return [RuleErrorBuilder::message($message)->identifier(RuleIdentifier::DEPENDENCY_TREE)->build()];
     }
 
     private function isTypeToAnalyse(ClassReflection $classReflection): bool

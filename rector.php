@@ -3,30 +3,13 @@
 declare(strict_types=1);
 
 use Rector\Config\RectorConfig;
-use Rector\Set\ValueObject\LevelSetList;
-use Rector\Set\ValueObject\SetList;
 
-return static function (RectorConfig $rectorConfig): void {
-    $rectorConfig->paths([
-        __DIR__ . '/src',
-        __DIR__ . '/tests',
-    ]);
-
-    $rectorConfig->importNames();
-
-    $rectorConfig->sets([
-        \Rector\PHPUnit\Set\PHPUnitSetList::PHPUNIT_100,
-        LevelSetList::UP_TO_PHP_82,
-        SetList::TYPE_DECLARATION,
-        SetList::PRIVATIZATION,
-        SetList::NAMING,
-        SetList::DEAD_CODE,
-        SetList::CODE_QUALITY,
-        SetList::CODING_STYLE,
-    ]);
-
-    $rectorConfig->skip([
+return RectorConfig::configure()
+    ->withPaths([__DIR__ . '/src', __DIR__ . '/tests'])
+    ->withImportNames()
+    ->withPhpSets()
+    ->withPreparedSets(typeDeclarations: true, privatization: true, naming: true, deadCode: true, codeQuality: true, codingStyle: true)
+    ->withSkip([
         '*/Fixture/*',
         '*/Source/*',
     ]);
-};
