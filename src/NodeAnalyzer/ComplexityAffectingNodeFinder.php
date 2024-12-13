@@ -8,7 +8,6 @@ use PhpParser\Node;
 use PhpParser\Node\Expr;
 use PhpParser\Node\Expr\BinaryOp\BooleanAnd;
 use PhpParser\Node\Expr\Ternary;
-use PhpParser\Node\Identifier;
 use PhpParser\Node\Stmt;
 use PhpParser\Node\Stmt\Break_;
 use PhpParser\Node\Stmt\Catch_;
@@ -71,12 +70,14 @@ final class ComplexityAffectingNodeFinder
         // B1. goto LABEL, break LABEL, continue LABEL
         if ($this->isInstanceOf($node, self::BREAKING_NODE_TYPES)) {
             // skip empty breaks
-            /** @var Goto_|Break_|Continue_ $node */
-            if ($node instanceof Goto_ && $node->name instanceof Identifier) {
+            if ($node instanceof Goto_) {
                 return true;
             }
 
-            if (($node instanceof Break_ || $node instanceof Continue_) && $node->num instanceof Expr) {
+            if (
+                ($node instanceof Break_ || $node instanceof Continue_)
+                && $node->num instanceof Expr
+            ) {
                 return true;
             }
         }

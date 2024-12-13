@@ -56,7 +56,7 @@ final class AstCognitiveComplexityAnalyzerTest extends TestCase
     private function parseFileToFirstFunctionLike(string $fileContent): ClassMethod | Function_
     {
         $parserFactory = new ParserFactory();
-        $parser = $parserFactory->create(ParserFactory::ONLY_PHP7);
+        $parser = $parserFactory->createForHostVersion();
         $nodes = $parser->parse($fileContent);
 
         $nodeFinder = new NodeFinder();

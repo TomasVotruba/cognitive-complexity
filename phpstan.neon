@@ -13,12 +13,12 @@ parameters:
         - src
         - tests
 
-    checkGenericClassInNonGenericObjectType: false
-
     excludePaths:
         - "*/Fixture/*"
         - "*/Source/*"
 
     ignoreErrors:
+        - identifier: missingType.generics
+
         # skip as always string
         - '#Parameter \#1 \$currentWorkingDirectory of class PHPStan\\DependencyInjection\\ContainerFactory constructor expects string, string\|false given#'

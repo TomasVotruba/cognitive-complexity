@@ -13,7 +13,6 @@ use PHPStan\Reflection\ParameterReflection;
 use PHPStan\Reflection\ParametersAcceptorSelector;
 use PHPStan\Rules\Rule;
 use PHPStan\Rules\RuleErrorBuilder;
-use PHPStan\Type\TypeWithClassName;
 use TomasVotruba\CognitiveComplexity\AstCognitiveComplexityAnalyzer;
 use TomasVotruba\CognitiveComplexity\ClassReflectionParser;
 use TomasVotruba\CognitiveComplexity\Configuration;
@@ -70,7 +69,9 @@ final readonly class ClassDependencyTreeRule implements Rule
 
         $extendedMethodReflection = $classReflection->getConstructor();
 
-        $parametersAcceptorWithPhpDocs = ParametersAcceptorSelector::selectSingle(
+        $parametersAcceptorWithPhpDocs = ParametersAcceptorSelector::selectFromArgs(
+            $scope,
+            [],
             $extendedMethodReflection->getVariants()
         );
 

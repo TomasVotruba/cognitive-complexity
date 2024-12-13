@@ -19,7 +19,7 @@ final readonly class ClassReflectionParser
     public function __construct()
     {
         $parserFactory = new ParserFactory();
-        $this->phpParser = $parserFactory->create(ParserFactory::PREFER_PHP7);
+        $this->phpParser = $parserFactory->createForHostVersion();
 
         $this->nodeFinder = new NodeFinder();
     }
