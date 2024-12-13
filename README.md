@@ -37,7 +37,7 @@ How to keep **cognitive complexity on 1**? Read [Keep Cognitive Complexity Low w
 composer require tomasvotruba/cognitive-complexity --dev
 ```
 
-The package is available on PHP 7.4-8.1 versions in tagged releases.
+The package is available on PHP 7.4+.
 
 <br>
 
@@ -47,7 +47,7 @@ With [PHPStan extension installer](https://github.com/phpstan/extension-installe
 
 Enable each item on their own with simple configuration:
 
-```neon
+```yaml
 # phpstan.neon
 parameters:
     cognitive_complexity:

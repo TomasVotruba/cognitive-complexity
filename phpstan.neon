@@ -7,6 +7,11 @@ parameters:
         class: 50
         function: 8
 
+    unused_public:
+        methods: true
+        properties: true
+        constants: true
+
     level: 8
 
     paths:
@@ -22,3 +27,6 @@ parameters:
 
         # skip as always string
         - '#Parameter \#1 \$currentWorkingDirectory of class PHPStan\\DependencyInjection\\ContainerFactory constructor expects string, string\|false given#'
+
+        # used in tests
+        - '#Public constant "TomasVotruba\\CognitiveComplexity\\Rules\\(.*?)::ERROR_MESSAGE" is never used#'
