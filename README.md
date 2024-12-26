@@ -27,7 +27,7 @@ function get_words_from_number(int $number): string
 
 This function uses nesting, conditions and continue back and forth. It's hard to read and results in **cognitive complexity of 4**.
 
-How to keep **cognitive complexity on 1**? Read [Keep Cognitive Complexity Low with PHPStan](https://tomasvotruba.com/blog/keep-cognitive-complexity-low-with-phpstan/) post to learn it.
+How to keep **cognitive complexity on 1**? Read [Cognitive load is what matters](https://minds.md/zakirullin/cognitive) or [Sonar paper about cognitive complexity metrics](https://www.sonarsource.com/docs/CognitiveComplexity.pdf) that inspired this repository.
 
 <br>
 
