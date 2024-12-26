@@ -29,6 +29,9 @@ This function uses nesting, conditions and continue back and forth. It's hard to
 
 How to keep **cognitive complexity on 1**? Read [Cognitive load is what matters](https://minds.md/zakirullin/cognitive) or [Sonar paper about cognitive complexity metrics](https://www.sonarsource.com/docs/CognitiveComplexity.pdf) that inspired this repository.
 
+<img src="https://github.com/zakirullin/cognitive-load/blob/main/img/cognitiveloadv5paper.png?raw=true">
+
+
 <br>
 
 ## Install
