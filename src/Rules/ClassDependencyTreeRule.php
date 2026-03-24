@@ -101,7 +101,7 @@ final readonly class ClassDependencyTreeRule implements Rule
     private function isTypeToAnalyse(ClassReflection $classReflection): bool
     {
         foreach ($this->configuration->getDependencyTreeTypes() as $dependencyTreeType) {
-            if ($classReflection->isSubclassOf($dependencyTreeType)) {
+            if ($classReflection->isSubclassOfClass($dependencyTreeType)) {
                 return true;
             }
         }
