@@ -44,6 +44,9 @@ final class FunctionLikeCognitiveComplexityRuleTest extends RuleTestCase
             8
         );
         yield [__DIR__ . '/Fixture/VideoRepository.php', [[$errorMessage, 12]]];
+
+        // backed enum with method should not crash (PHP 8.5 compat)
+        yield [__DIR__ . '/Fixture/BackedEnumWithMethod.php', []];
     }
 
     /**

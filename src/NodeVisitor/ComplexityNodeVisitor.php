@@ -17,8 +17,15 @@ final class ComplexityNodeVisitor extends NodeVisitorAbstract
     ) {
     }
 
-    public function enterNode(Node $node): ?Node
+    /**
+     * @param Node|int $node On PHP 8.5 with php-parser v5, BackedEnumCase values may be passed as int
+     */
+    public function enterNode(Node|int $node): ?Node
     {
+        if (! $node instanceof Node) {
+            return null;
+        }
+
         if (! $this->complexityAffectingNodeFinder->isIncrementingNode($node)) {
             return null;
         }
