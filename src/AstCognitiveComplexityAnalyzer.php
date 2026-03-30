@@ -68,9 +68,6 @@ final readonly class AstCognitiveComplexityAnalyzer
         $this->complexityNodeVisitor->leaveNode($node);
     }
 
-    /**
-     * @param mixed $subNode
-     */
     private function traverseSubNode(mixed $subNode): void
     {
         if ($subNode instanceof Node) {
