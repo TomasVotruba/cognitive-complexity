@@ -4,40 +4,12 @@
     "description": "PHPStan rules to measure cognitive complexity of your classes and methods",
     "license": "MIT",
     "require": {
-        "php": "^8.3",
-        "phpstan/phpstan": "^2.0",
-        "nikic/php-parser": "^5.3"
-    },
-    "require-dev": {
-        "phpstan/extension-installer": "^1.4",
-        "phpstan/phpstan-deprecation-rules": "^2.0",
-        "phpunit/phpunit": "^11.5",
-        "symplify/easy-coding-standard": "^12.5",
-        "rector/rector": "^2.0",
-        "tracy/tracy": "^2.10",
-        "php-parallel-lint/php-parallel-lint": "^1.4",
-        "tomasvotruba/type-coverage": "^2.0",
-        "tomasvotruba/unused-public": "^2.0"
+        "php": "^7.4 || ^8.0",
+        "phpstan/phpstan": "^2"
     },
     "autoload": {
         "psr-4": {
             "TomasVotruba\\CognitiveComplexity\\": "src"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "TomasVotruba\\CognitiveComplexity\\Tests\\": "tests"
-        }
-    },
-    "scripts": {
-        "check-cs": "vendor/bin/ecs check --ansi",
-        "fix-cs": "vendor/bin/ecs check --fix --ansi",
-        "phpstan": "vendor/bin/phpstan --ansi",
-        "rector": "vendor/bin/rector --dry-run --ansi"
-    },
-    "config": {
-        "allow-plugins": {
-            "phpstan/extension-installer": true
         }
     },
     "extra": {

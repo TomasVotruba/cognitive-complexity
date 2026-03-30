@@ -11,16 +11,28 @@ use TomasVotruba\CognitiveComplexity\NodeAnalyzer\ComplexityAffectingNodeFinder;
 
 final class ComplexityNodeVisitor extends NodeVisitorAbstract
 {
+    /**
+     * @readonly
+     */
+    private CognitiveComplexityDataCollector $cognitiveComplexityDataCollector;
+
+    /**
+     * @readonly
+     */
+    private ComplexityAffectingNodeFinder $complexityAffectingNodeFinder;
+
     public function __construct(
-        private readonly CognitiveComplexityDataCollector $cognitiveComplexityDataCollector,
-        private readonly ComplexityAffectingNodeFinder $complexityAffectingNodeFinder
+        CognitiveComplexityDataCollector $cognitiveComplexityDataCollector,
+        ComplexityAffectingNodeFinder $complexityAffectingNodeFinder
     ) {
+        $this->cognitiveComplexityDataCollector = $cognitiveComplexityDataCollector;
+        $this->complexityAffectingNodeFinder = $complexityAffectingNodeFinder;
     }
 
     /**
      * @param Node|int $node On PHP 8.5 with php-parser v5, BackedEnumCase values may be passed as int
      */
-    public function enterNode(Node|int $node): ?Node
+    public function enterNode($node): ?Node
     {
         if (! $node instanceof Node) {
             return null;
