@@ -61,20 +61,31 @@ final readonly class AstCognitiveComplexityAnalyzer
         $this->complexityNodeVisitor->enterNode($node);
 
         foreach ($node->getSubNodeNames() as $name) {
-            $subNode = $node->{$name};
-
-            if ($subNode instanceof Node) {
-                $this->traverseNode($subNode);
-            } elseif (is_array($subNode)) {
-                foreach ($subNode as $item) {
-                    if ($item instanceof Node) {
-                        $this->traverseNode($item);
-                    }
-                }
-            }
+            $this->traverseSubNode($node->{$name});
         }
 
         $this->nestingNodeVisitor->leaveNode($node);
         $this->complexityNodeVisitor->leaveNode($node);
+    }
+
+    /**
+     * @param mixed $subNode
+     */
+    private function traverseSubNode(mixed $subNode): void
+    {
+        if ($subNode instanceof Node) {
+            $this->traverseNode($subNode);
+            return;
+        }
+
+        if (! is_array($subNode)) {
+            return;
+        }
+
+        foreach ($subNode as $item) {
+            if ($item instanceof Node) {
+                $this->traverseNode($item);
+            }
+        }
     }
 }
