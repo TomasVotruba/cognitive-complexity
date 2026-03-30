@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace TomasVotruba\CognitiveComplexity;
 
+use PhpParser\Node;
 use PhpParser\Node\Stmt\Class_;
 use PhpParser\Node\Stmt\ClassMethod;
 use PhpParser\Node\Stmt\Function_;
 use TomasVotruba\CognitiveComplexity\DataCollector\CognitiveComplexityDataCollector;
-use TomasVotruba\CognitiveComplexity\NodeTraverser\ComplexityNodeTraverserFactory;
+use TomasVotruba\CognitiveComplexity\NodeVisitor\ComplexityNodeVisitor;
 use TomasVotruba\CognitiveComplexity\NodeVisitor\NestingNodeVisitor;
 
 /**
@@ -19,9 +20,9 @@ use TomasVotruba\CognitiveComplexity\NodeVisitor\NestingNodeVisitor;
 final readonly class AstCognitiveComplexityAnalyzer
 {
     public function __construct(
-        private ComplexityNodeTraverserFactory $complexityNodeTraverserFactory,
         private CognitiveComplexityDataCollector $cognitiveComplexityDataCollector,
-        private NestingNodeVisitor $nestingNodeVisitor
+        private NestingNodeVisitor $nestingNodeVisitor,
+        private ComplexityNodeVisitor $complexityNodeVisitor
     ) {
     }
 
@@ -43,9 +44,37 @@ final readonly class AstCognitiveComplexityAnalyzer
         $this->cognitiveComplexityDataCollector->reset();
         $this->nestingNodeVisitor->reset();
 
-        $nodeTraverser = $this->complexityNodeTraverserFactory->create();
-        $nodeTraverser->traverse([$functionLike]);
+        $this->traverseNode($functionLike);
 
         return $this->cognitiveComplexityDataCollector->getCognitiveComplexity();
+    }
+
+    /**
+     * Manual recursive traversal to avoid PHPStan phar-bundled PHP-Parser
+     * compatibility issues with PhpParser\NodeTraverser.
+     *
+     * @see https://github.com/TomasVotruba/cognitive-complexity/issues/14
+     */
+    private function traverseNode(Node $node): void
+    {
+        $this->nestingNodeVisitor->enterNode($node);
+        $this->complexityNodeVisitor->enterNode($node);
+
+        foreach ($node->getSubNodeNames() as $name) {
+            $subNode = $node->{$name};
+
+            if ($subNode instanceof Node) {
+                $this->traverseNode($subNode);
+            } elseif (is_array($subNode)) {
+                foreach ($subNode as $item) {
+                    if ($item instanceof Node) {
+                        $this->traverseNode($item);
+                    }
+                }
+            }
+        }
+
+        $this->nestingNodeVisitor->leaveNode($node);
+        $this->complexityNodeVisitor->leaveNode($node);
     }
 }

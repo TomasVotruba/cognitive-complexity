@@ -17,7 +17,6 @@ parameters:
 services:
     - TomasVotruba\CognitiveComplexity\DataCollector\CognitiveComplexityDataCollector
     - TomasVotruba\CognitiveComplexity\AstCognitiveComplexityAnalyzer
-    - TomasVotruba\CognitiveComplexity\NodeTraverser\ComplexityNodeTraverserFactory
     - TomasVotruba\CognitiveComplexity\NodeVisitor\NestingNodeVisitor
     - TomasVotruba\CognitiveComplexity\NodeVisitor\ComplexityNodeVisitor
     - TomasVotruba\CognitiveComplexity\NodeAnalyzer\ComplexityAffectingNodeFinder
