@@ -51,6 +51,7 @@ final class AstCognitiveComplexityAnalyzerTest extends TestCase
         yield [__DIR__ . '/Fixture/interface_0.php.inc', 0];
         yield [__DIR__ . '/Fixture/for_7.php.inc', 7];
         yield [__DIR__ . '/Fixture/ternary_3.php.inc', 3];
+        yield [__DIR__ . '/Fixture/backed_enum_0.php.inc', 0];
     }
 
     private function parseFileToFirstFunctionLike(string $fileContent): ClassMethod | Function_
