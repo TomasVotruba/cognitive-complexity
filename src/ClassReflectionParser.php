@@ -10,10 +10,16 @@ use PhpParser\Parser;
 use PhpParser\ParserFactory;
 use PHPStan\Reflection\ClassReflection;
 
-final readonly class ClassReflectionParser
+final class ClassReflectionParser
 {
+    /**
+     * @readonly
+     */
     private Parser $phpParser;
 
+    /**
+     * @readonly
+     */
     private NodeFinder $nodeFinder;
 
     public function __construct()

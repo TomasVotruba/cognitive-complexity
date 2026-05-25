@@ -17,14 +17,29 @@ use TomasVotruba\CognitiveComplexity\Enum\RuleIdentifier;
 /**
  * @see \TomasVotruba\CognitiveComplexity\Tests\Rules\ClassLikeCognitiveComplexityRule\ClassLikeCognitiveComplexityRuleTest
  */
-final readonly class ClassLikeCognitiveComplexityRule implements Rule
+final class ClassLikeCognitiveComplexityRule implements Rule
 {
-    public const string ERROR_MESSAGE = 'Class cognitive complexity is %d, keep it under %d';
+    /**
+     * @var string
+     */
+    public const ERROR_MESSAGE = 'Class cognitive complexity is %d, keep it under %d';
+
+    /**
+     * @readonly
+     */
+    private AstCognitiveComplexityAnalyzer $astCognitiveComplexityAnalyzer;
+
+    /**
+     * @readonly
+     */
+    private Configuration $configuration;
 
     public function __construct(
-        private AstCognitiveComplexityAnalyzer $astCognitiveComplexityAnalyzer,
-        private Configuration $configuration
+        AstCognitiveComplexityAnalyzer $astCognitiveComplexityAnalyzer,
+        Configuration $configuration
     ) {
+        $this->astCognitiveComplexityAnalyzer = $astCognitiveComplexityAnalyzer;
+        $this->configuration = $configuration;
     }
 
     /**
