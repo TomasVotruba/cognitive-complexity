@@ -11,13 +11,13 @@
     "require-dev": {
         "phpstan/extension-installer": "^1.4",
         "phpstan/phpstan-deprecation-rules": "^2.0",
-        "phpunit/phpunit": "^11.5",
-        "symplify/easy-coding-standard": "^12.5",
-        "rector/rector": "^2.0",
-        "tracy/tracy": "^2.10",
+        "phpunit/phpunit": "^12.5",
+        "symplify/easy-coding-standard": "^13.3",
+        "rector/rector": "^2.6",
+        "tracy/tracy": "^2.12",
         "php-parallel-lint/php-parallel-lint": "^1.4",
-        "tomasvotruba/type-coverage": "^2.0",
-        "tomasvotruba/unused-public": "^2.0"
+        "tomasvotruba/type-coverage": "^2.3",
+        "tomasvotruba/unused-public": "^2.2"
     },
     "autoload": {
         "psr-4": {

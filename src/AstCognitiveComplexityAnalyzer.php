@@ -38,7 +38,7 @@ final readonly class AstCognitiveComplexityAnalyzer
     /**
      * @api
      */
-    public function analyzeFunctionLike(Function_ | ClassMethod $functionLike): int
+    public function analyzeFunctionLike(Function_|ClassMethod $functionLike): int
     {
         $this->cognitiveComplexityDataCollector->reset();
         $this->nestingNodeVisitor->reset();

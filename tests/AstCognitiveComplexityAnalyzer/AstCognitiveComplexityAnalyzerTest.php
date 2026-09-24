@@ -54,7 +54,7 @@ final class AstCognitiveComplexityAnalyzerTest extends TestCase
         yield [__DIR__ . '/Fixture/backed_enum_0.php.inc', 0];
     }
 
-    private function parseFileToFirstFunctionLike(string $fileContent): ClassMethod | Function_
+    private function parseFileToFirstFunctionLike(string $fileContent): ClassMethod|Function_
     {
         $parserFactory = new ParserFactory();
         $parser = $parserFactory->createForHostVersion();

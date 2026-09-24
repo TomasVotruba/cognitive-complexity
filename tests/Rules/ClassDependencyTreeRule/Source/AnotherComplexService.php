@@ -15,7 +15,7 @@ class AnotherComplexService
                     }
                 }
             }
-        } catch (\Exception | \Exception $exception) { // +1
+        } catch (\Exception|\Exception $exception) { // +1
             if (true) { // +2 (nesting=1)
             }
         }
