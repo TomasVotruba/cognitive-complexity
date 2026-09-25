@@ -40,7 +40,7 @@ How to keep **cognitive complexity on 1**? Read [Cognitive load is what matters]
 composer require tomasvotruba/cognitive-complexity --dev
 ```
 
-The package is available on PHP 7.4+.
+The package is available on PHP 8.4+.
 
 <br>
 
