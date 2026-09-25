@@ -26,7 +26,7 @@ final class ClassDependencyTreeRuleTest extends RuleTestCase
 
     public static function provideDataForTest(): Iterator
     {
-        $errorMessage = sprintf(ClassDependencyTreeRule::ERROR_MESSAGE, 22, 20);
+        $errorMessage = sprintf(ClassDependencyTreeRule::ERROR_MESSAGE, 23, 20);
         yield [__DIR__ . '/Fixture/ClassWithManyComplexTree.php', [[$errorMessage, 11]]];
     }
 

@@ -5,13 +5,16 @@ declare(strict_types=1);
 namespace TomasVotruba\CognitiveComplexity\NodeVisitor;
 
 use PhpParser\Node;
+use PhpParser\Node\Expr\ArrowFunction;
 use PhpParser\Node\Expr\Closure;
+use PhpParser\Node\Expr\Match_;
 use PhpParser\Node\Expr\Ternary;
 use PhpParser\Node\Stmt\Catch_;
 use PhpParser\Node\Stmt\Do_;
 use PhpParser\Node\Stmt\For_;
 use PhpParser\Node\Stmt\Foreach_;
 use PhpParser\Node\Stmt\If_;
+use PhpParser\Node\Stmt\Switch_;
 use PhpParser\Node\Stmt\While_;
 use PhpParser\NodeVisitorAbstract;
 use TomasVotruba\CognitiveComplexity\DataCollector\CognitiveComplexityDataCollector;
@@ -20,22 +23,25 @@ use TomasVotruba\CognitiveComplexity\NodeAnalyzer\ComplexityAffectingNodeFinder;
 final class NestingNodeVisitor extends NodeVisitorAbstract
 {
     /**
+     * B3. Nesting level increments; "else" and "elseif" are children of If_, so they share its level
+     *
      * @var array<class-string<Node>>
      */
     private const array NESTING_NODE_TYPES = [
         If_::class,
+        Switch_::class,
+        Match_::class,
         For_::class,
-        While_::class,
-        Catch_::class,
-        Closure::class,
         Foreach_::class,
+        While_::class,
         Do_::class,
+        Catch_::class,
         Ternary::class,
+        Closure::class,
+        ArrowFunction::class,
     ];
 
-    private int $measuredNestingLevel = 1;
-
-    private int $previousNestingLevel = 0;
+    private int $nestingLevel = 0;
 
     public function __construct(
         private readonly CognitiveComplexityDataCollector $cognitiveComplexityDataCollector,
@@ -43,9 +49,14 @@ final class NestingNodeVisitor extends NodeVisitorAbstract
     ) {
     }
 
-    public function reset(): void
+    /**
+     * @param Node[] $nodes
+     */
+    public function beforeTraverse(array $nodes): ?array
     {
-        $this->measuredNestingLevel = 1;
+        $this->nestingLevel = 0;
+
+        return null;
     }
 
     /**
@@ -53,31 +64,16 @@ final class NestingNodeVisitor extends NodeVisitorAbstract
      */
     public function enterNode(Node|int $node): ?Node
     {
-        if (! $node instanceof Node) {
+        if (! $node instanceof Node || ! $this->isNestingNode($node)) {
             return null;
         }
 
-        if ($this->isNestingNode($node)) {
-            ++$this->measuredNestingLevel;
+        // B3. Nesting increment, closures and arrow functions only raise the level
+        if ($this->complexityAffectingNodeFinder->isIncrementingNode($node)) {
+            $this->cognitiveComplexityDataCollector->increaseNesting($this->nestingLevel);
         }
 
-        if (! $this->complexityAffectingNodeFinder->isIncrementingNode($node)) {
-            return null;
-        }
-
-        if ($this->complexityAffectingNodeFinder->isBreakingNode($node)) {
-            $this->previousNestingLevel = $this->measuredNestingLevel;
-            return null;
-        }
-
-        // B2. Nesting level
-        if ($this->measuredNestingLevel > 1 && $this->previousNestingLevel < $this->measuredNestingLevel) {
-            // only going deeper, not on the same level
-            $nestingComplexity = $this->measuredNestingLevel - 2;
-            $this->cognitiveComplexityDataCollector->increaseNesting($nestingComplexity);
-        }
-
-        $this->previousNestingLevel = $this->measuredNestingLevel;
+        ++$this->nestingLevel;
 
         return null;
     }
@@ -87,12 +83,8 @@ final class NestingNodeVisitor extends NodeVisitorAbstract
      */
     public function leaveNode(Node|int $node): ?Node
     {
-        if (! $node instanceof Node) {
-            return null;
-        }
-
-        if ($this->isNestingNode($node)) {
-            --$this->measuredNestingLevel;
+        if ($node instanceof Node && $this->isNestingNode($node)) {
+            --$this->nestingLevel;
         }
 
         return null;

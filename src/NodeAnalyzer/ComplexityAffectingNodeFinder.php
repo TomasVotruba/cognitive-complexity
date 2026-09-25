@@ -7,6 +7,10 @@ namespace TomasVotruba\CognitiveComplexity\NodeAnalyzer;
 use PhpParser\Node;
 use PhpParser\Node\Expr;
 use PhpParser\Node\Expr\BinaryOp\BooleanAnd;
+use PhpParser\Node\Expr\BinaryOp\BooleanOr;
+use PhpParser\Node\Expr\BinaryOp\LogicalAnd;
+use PhpParser\Node\Expr\BinaryOp\LogicalOr;
+use PhpParser\Node\Expr\Match_;
 use PhpParser\Node\Expr\Ternary;
 use PhpParser\Node\Stmt;
 use PhpParser\Node\Stmt\Break_;
@@ -41,28 +45,39 @@ final class ComplexityAffectingNodeFinder
         Else_::class,
         ElseIf_::class,
         Switch_::class,
+        Match_::class,
         For_::class,
         Foreach_::class,
         While_::class,
         Do_::class,
         Catch_::class,
-        // &&
-        BooleanAnd::class,
         Ternary::class,
+    ];
+
+    /**
+     * B1. Increments once per sequence of like operators
+     *
+     * @var array<class-string<Expr>>
+     */
+    private const array BOOLEAN_OPERATOR_TYPES = [
+        BooleanAnd::class,
+        BooleanOr::class,
+        LogicalAnd::class,
+        LogicalOr::class,
     ];
 
     public function isIncrementingNode(Node $node): bool
     {
-        // B1. ternary operator
         if ($this->isInstanceOf($node, self::INCREASING_NODE_TYPES)) {
             return true;
         }
 
-        if ($node instanceof Ternary) {
-            return true;
-        }
-
         return $this->isBreakingNode($node);
+    }
+
+    public function isBooleanOperator(Node $node): bool
+    {
+        return $this->isInstanceOf($node, self::BOOLEAN_OPERATOR_TYPES);
     }
 
     public function isBreakingNode(Node $node): bool
