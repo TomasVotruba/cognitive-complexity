@@ -22,6 +22,8 @@ use TomasVotruba\CognitiveComplexity\Enum\RuleIdentifier;
  * @implements Rule<InClassNode>
  *
  * Find classes with complex constructor dependency tree = current class complexity + complexity of all __construct() dependencies.
+ *
+ * @see \TomasVotruba\CognitiveComplexity\Tests\Rules\ClassDependencyTreeRule\ClassDependencyTreeRuleTest
  */
 final readonly class ClassDependencyTreeRule implements Rule
 {

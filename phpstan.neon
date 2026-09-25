@@ -12,6 +12,18 @@ parameters:
         properties: true
         constants: true
 
+    symplify:
+        naming: true
+        complexity: true
+        configurable: true
+        static: true
+        symfony: true
+        symfonyConfig: true
+        doctrine: true
+        phpunit: true
+        mocks: true
+        ctor: true
+
     level: 8
 
     paths:
