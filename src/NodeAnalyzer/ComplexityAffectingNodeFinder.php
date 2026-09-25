@@ -90,12 +90,6 @@ final class ComplexityAffectingNodeFinder
      */
     private function isInstanceOf(Node $node, array $types): bool
     {
-        foreach ($types as $type) {
-            if ($node instanceof $type) {
-                return true;
-            }
-        }
-
-        return false;
+        return array_any($types, fn (string $type): bool => $node instanceof $type);
     }
 }

@@ -22,12 +22,16 @@ jobs:
                         run: composer phpstan --ansi
 
                     -
+                        name: 'Rector'
+                        run: composer rector
+
+                    -
                         name: 'Composer Validate'
                         run: composer validate --ansi
 
                     -
                         name: 'Coding Standard'
-                        run: composer fix-cs --ansi
+                        run: composer check-cs --ansi
 
                     -
                         name: 'Tests'
@@ -41,7 +45,7 @@ jobs:
         runs-on: ubuntu-latest
 
         steps:
-            -   uses: actions/checkout@v2
+            -   uses: actions/checkout@v7
 
             -   uses: shivammathur/setup-php@v2
                 with:
@@ -49,6 +53,6 @@ jobs:
                     coverage: none
 
             # composer install cache - https://github.com/ramsey/composer-install
-            -   uses: "ramsey/composer-install@v2"
+            -   uses: "ramsey/composer-install@v4"
 
             -   run: ${{ matrix.actions.run }}
