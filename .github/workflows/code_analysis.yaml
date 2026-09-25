@@ -12,6 +12,11 @@ jobs:
             fail-fast: false
             matrix:
                 actions:
+                    # @see https://github.com/rectorphp/jack
+                    -
+                        name: 'Rector Jack'
+                        run: vendor/bin/jack breakpoint --limit 5
+
                     -
                         name: 'PHPStan'
                         run: composer phpstan --ansi
