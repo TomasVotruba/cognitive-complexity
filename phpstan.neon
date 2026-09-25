@@ -1,12 +1,6 @@
 includes:
     - config/extension.neon
 
-    # symplify/phpstan-rules sets not loaded by extension-installer
-    - vendor/symplify/phpstan-rules/config/code-complexity-rules.neon
-    - vendor/symplify/phpstan-rules/config/configurable-rules.neon
-    - vendor/symplify/phpstan-rules/config/static-rules.neon
-    - vendor/symplify/phpstan-rules/config/phpunit-rules.neon
-
 parameters:
     # parameters of this extension
     cognitive_complexity:
@@ -23,6 +17,10 @@ parameters:
         complexity: true
         configurable: true
         static: true
+        symfony: true
+        symfonyConfig: true
+        doctrine: true
+        phpunit: true
         mocks: true
         ctor: true
 
