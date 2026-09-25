@@ -6,13 +6,15 @@ namespace TomasVotruba\CognitiveComplexity\Tests\Rules\FunctionLikeCognitiveComp
 
 use Iterator;
 use Override;
-use PHPStan\Rules\Rule;
 use PHPStan\Testing\RuleTestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use TomasVotruba\CognitiveComplexity\Rules\FunctionLikeCognitiveComplexityRule;
 use TomasVotruba\CognitiveComplexity\Tests\Rules\FunctionLikeCognitiveComplexityRule\Fixture\ClassMethodOverComplicated;
 use TomasVotruba\CognitiveComplexity\Tests\Rules\FunctionLikeCognitiveComplexityRule\Fixture\VideoRepository;
 
+/**
+ * @extends RuleTestCase<FunctionLikeCognitiveComplexityRule>
+ */
 final class FunctionLikeCognitiveComplexityRuleTest extends RuleTestCase
 {
     /**
@@ -58,7 +60,7 @@ final class FunctionLikeCognitiveComplexityRuleTest extends RuleTestCase
         return [__DIR__ . '/config/configured_rule.neon'];
     }
 
-    protected function getRule(): Rule
+    protected function getRule(): FunctionLikeCognitiveComplexityRule
     {
         return self::getContainer()->getByType(FunctionLikeCognitiveComplexityRule::class);
     }

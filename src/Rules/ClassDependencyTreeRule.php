@@ -10,7 +10,6 @@ use PHPStan\Analyser\Scope;
 use PHPStan\Node\InClassNode;
 use PHPStan\Reflection\ClassReflection;
 use PHPStan\Reflection\ParameterReflection;
-use PHPStan\Reflection\ParametersAcceptorSelector;
 use PHPStan\Reflection\ReflectionProvider;
 use PHPStan\Rules\Rule;
 use PHPStan\Rules\RuleErrorBuilder;
@@ -67,33 +66,28 @@ final readonly class ClassDependencyTreeRule implements Rule
             return [];
         }
 
-        $extendedMethodReflection = $classReflection->getConstructor();
+        $extendedParametersAcceptor = $classReflection->getConstructor()
+            ->getOnlyVariant();
 
-        $parametersAcceptorWithPhpDocs = ParametersAcceptorSelector::selectFromArgs(
-            $scope,
-            [],
-            $extendedMethodReflection->getVariants()
-        );
+        $totalDependencyTreeComplexity = $this->astCognitiveComplexityAnalyzer->analyzeClassLike($originalClassLike);
 
-        $totaDependencyTreeComplexity = $this->astCognitiveComplexityAnalyzer->analyzeClassLike($originalClassLike);
-
-        foreach ($parametersAcceptorWithPhpDocs->getParameters() as $parameterReflectionWithPhpDoc) {
-            $dependencyClass = $this->resolveParameterTypeClass($parameterReflectionWithPhpDoc);
+        foreach ($extendedParametersAcceptor->getParameters() as $extendedParameterReflection) {
+            $dependencyClass = $this->resolveParameterTypeClass($extendedParameterReflection);
             if (! $dependencyClass instanceof Class_) {
                 continue;
             }
 
             $dependencyComplexity = $this->astCognitiveComplexityAnalyzer->analyzeClassLike($dependencyClass);
-            $totaDependencyTreeComplexity += $dependencyComplexity;
+            $totalDependencyTreeComplexity += $dependencyComplexity;
         }
 
-        if ($totaDependencyTreeComplexity <= $this->configuration->getMaxDependencyTreeComplexity()) {
+        if ($totalDependencyTreeComplexity <= $this->configuration->getMaxDependencyTreeComplexity()) {
             return [];
         }
 
         $message = sprintf(
             self::ERROR_MESSAGE,
-            $totaDependencyTreeComplexity,
+            $totalDependencyTreeComplexity,
             $this->configuration->getMaxDependencyTreeComplexity()
         );
 

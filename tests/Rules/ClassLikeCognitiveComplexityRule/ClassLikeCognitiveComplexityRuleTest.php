@@ -6,11 +6,13 @@ namespace TomasVotruba\CognitiveComplexity\Tests\Rules\ClassLikeCognitiveComplex
 
 use Iterator;
 use Override;
-use PHPStan\Rules\Rule;
 use PHPStan\Testing\RuleTestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use TomasVotruba\CognitiveComplexity\Rules\ClassLikeCognitiveComplexityRule;
 
+/**
+ * @extends RuleTestCase<ClassLikeCognitiveComplexityRule>
+ */
 final class ClassLikeCognitiveComplexityRuleTest extends RuleTestCase
 {
     /**
@@ -26,6 +28,7 @@ final class ClassLikeCognitiveComplexityRuleTest extends RuleTestCase
     {
         $errorMessage = sprintf(ClassLikeCognitiveComplexityRule::ERROR_MESSAGE, 54, 50);
         yield [__DIR__ . '/Fixture/ClassWithManyComplexMethods.php', [[$errorMessage, 7]]];
+        yield [__DIR__ . '/Fixture/EnumWithManyComplexMethods.php', [[$errorMessage, 7]]];
 
         // complexity: 9
         yield [__DIR__ . '/Fixture/SimpleCommand.php', []];
@@ -40,7 +43,7 @@ final class ClassLikeCognitiveComplexityRuleTest extends RuleTestCase
         return [__DIR__ . '/config/configured_rule.neon'];
     }
 
-    protected function getRule(): Rule
+    protected function getRule(): ClassLikeCognitiveComplexityRule
     {
         return self::getContainer()->getByType(ClassLikeCognitiveComplexityRule::class);
     }
