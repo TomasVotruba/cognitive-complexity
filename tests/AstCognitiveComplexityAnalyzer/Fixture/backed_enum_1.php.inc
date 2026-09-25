@@ -7,7 +7,7 @@ enum Status: int
 
     public function label(): string
     {
-        return match ($this) {
+        return match ($this) { // +1
             self::Active => 'Active',
             self::Inactive => 'Inactive',
         };

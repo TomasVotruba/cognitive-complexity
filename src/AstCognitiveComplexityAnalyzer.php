@@ -9,7 +9,6 @@ use PhpParser\Node\Stmt\ClassMethod;
 use PhpParser\Node\Stmt\Function_;
 use TomasVotruba\CognitiveComplexity\DataCollector\CognitiveComplexityDataCollector;
 use TomasVotruba\CognitiveComplexity\NodeTraverser\ComplexityNodeTraverserFactory;
-use TomasVotruba\CognitiveComplexity\NodeVisitor\NestingNodeVisitor;
 
 /**
  * @see \TomasVotruba\CognitiveComplexity\Tests\AstCognitiveComplexityAnalyzer\AstCognitiveComplexityAnalyzerTest
@@ -20,8 +19,7 @@ final readonly class AstCognitiveComplexityAnalyzer
 {
     public function __construct(
         private ComplexityNodeTraverserFactory $complexityNodeTraverserFactory,
-        private CognitiveComplexityDataCollector $cognitiveComplexityDataCollector,
-        private NestingNodeVisitor $nestingNodeVisitor
+        private CognitiveComplexityDataCollector $cognitiveComplexityDataCollector
     ) {
     }
 
@@ -41,7 +39,6 @@ final readonly class AstCognitiveComplexityAnalyzer
     public function analyzeFunctionLike(Function_|ClassMethod $functionLike): int
     {
         $this->cognitiveComplexityDataCollector->reset();
-        $this->nestingNodeVisitor->reset();
 
         $nodeTraverser = $this->complexityNodeTraverserFactory->create();
         $nodeTraverser->traverse([$functionLike]);
