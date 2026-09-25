@@ -2,7 +2,7 @@
 
 <br>
 
-Cognitive complexity tells us, how difficult code is to understand by a reader.
+Cognitive complexity tells how difficult code is for a reader to understand. This package adds PHPStan rules that report classes and methods that got too complex.
 
 **How is cognitive complexity measured?**
 
@@ -25,7 +25,14 @@ function get_words_from_number(int $number): string
 }
 ```
 
-This function uses nesting, conditions and continue back and forth. It's hard to read and results in **cognitive complexity of 4**.
+Every branch makes the reader keep one more path in their head. This function results in **cognitive complexity of 4**.
+
+What adds complexity:
+
+* **+1** for each `if`, `elseif`, `else`, `switch`, `match`, ternary, `for`, `foreach`, `while`, `do-while` and `catch`
+* **+1** for each sequence of boolean operators, e.g. `$a && $b && $c` is +1, `$a && $b || $c` is +2
+* **+1** for `goto` and `break`/`continue` with a level
+* **+1 per nesting level** for structures nested in loops, conditions, closures or `catch`
 
 How to keep **cognitive complexity on 1**? Read [Cognitive load is what matters](https://minds.md/zakirullin/cognitive) or [Sonar paper about cognitive complexity metrics](https://www.sonarsource.com/docs/CognitiveComplexity.pdf) that inspired this repository.
 
@@ -46,30 +53,36 @@ The package is available on PHP 8.4+.
 
 ## Usage
 
-With [PHPStan extension installer](https://github.com/phpstan/extension-installer), everything is ready to run.
+With [PHPStan extension installer](https://github.com/phpstan/extension-installer), everything is ready to run. The class and function rules are enabled by default.
 
-Enable each item on their own with simple configuration:
+Adjust the limits in your config, these are the defaults:
 
 ```yaml
 # phpstan.neon
 parameters:
     cognitive_complexity:
-        class: 50
-        function: 8
+        class: 40
+        function: 9
 ```
+
+Each rule has its own error identifier, so you can ignore it on a specific place:
+
+* `complexity.classLike`
+* `complexity.functionLike`
+* `complexity.dependencyTree`
 
 <br>
 
 ## Detect complex Class Dependency Trees
 
-In classes like controllers, Rector rules, PHPStan rules or other services of specific type, the complexity can be hidden in the __construct() dependencies. Simple class with 10 dependencies is more complex than complex class with 2 dependencies.
+In classes like controllers, Rector rules, PHPStan rules or other services of specific type, the complexity can be hidden in the `__construct()` dependencies. A simple class with 10 dependencies is more complex than a complex class with 2 dependencies.
 
 That's why there is a rule to detect these dependency trees. It checks:
 
 * complexity of **current class**
 * **constructor dependencies and their class complexity** together
 
-Final number is compared and used as a final complexity:
+Their sum is compared to the limit. The rule is disabled until you set the types to check:
 
 ```yaml
 # phpstan.neon
