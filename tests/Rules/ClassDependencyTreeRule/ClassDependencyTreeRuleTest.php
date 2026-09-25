@@ -6,11 +6,13 @@ namespace TomasVotruba\CognitiveComplexity\Tests\Rules\ClassDependencyTreeRule;
 
 use Iterator;
 use Override;
-use PHPStan\Rules\Rule;
 use PHPStan\Testing\RuleTestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use TomasVotruba\CognitiveComplexity\Rules\ClassDependencyTreeRule;
 
+/**
+ * @extends RuleTestCase<ClassDependencyTreeRule>
+ */
 final class ClassDependencyTreeRuleTest extends RuleTestCase
 {
     /**
@@ -37,7 +39,7 @@ final class ClassDependencyTreeRuleTest extends RuleTestCase
         return [__DIR__ . '/config/configured_rule.neon'];
     }
 
-    protected function getRule(): Rule
+    protected function getRule(): ClassDependencyTreeRule
     {
         return self::getContainer()->getByType(ClassDependencyTreeRule::class);
     }

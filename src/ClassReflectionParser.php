@@ -4,17 +4,25 @@ declare(strict_types=1);
 
 namespace TomasVotruba\CognitiveComplexity;
 
+use PhpParser\Node;
 use PhpParser\Node\Stmt\Class_;
 use PhpParser\NodeFinder;
+use PhpParser\NodeTraverser;
+use PhpParser\NodeVisitor\NameResolver;
 use PhpParser\Parser;
 use PhpParser\ParserFactory;
 use PHPStan\Reflection\ClassReflection;
 
-final readonly class ClassReflectionParser
+final class ClassReflectionParser
 {
-    private Parser $phpParser;
+    private readonly Parser $phpParser;
 
-    private NodeFinder $nodeFinder;
+    private readonly NodeFinder $nodeFinder;
+
+    /**
+     * @var array<string, Class_|null>
+     */
+    private array $classesByName = [];
 
     public function __construct()
     {
@@ -25,6 +33,18 @@ final readonly class ClassReflectionParser
     }
 
     public function parse(ClassReflection $classReflection): ?Class_
+    {
+        $className = $classReflection->getName();
+        if (array_key_exists($className, $this->classesByName)) {
+            return $this->classesByName[$className];
+        }
+
+        $this->classesByName[$className] = $this->parseClass($classReflection);
+
+        return $this->classesByName[$className];
+    }
+
+    private function parseClass(ClassReflection $classReflection): ?Class_
     {
         $fileName = $classReflection->getFileName();
         if (! is_string($fileName)) {
@@ -39,6 +59,15 @@ final readonly class ClassReflectionParser
             return null;
         }
 
-        return $this->nodeFinder->findFirstInstanceOf($stmts, Class_::class);
+        $nodeTraverser = new NodeTraverser(new NameResolver());
+        $stmts = $nodeTraverser->traverse($stmts);
+
+        $class = $this->nodeFinder->findFirst(
+            $stmts,
+            static fn (Node $node): bool => $node instanceof Class_
+                && $node->namespacedName?->toString() === $classReflection->getName()
+        );
+
+        return $class instanceof Class_ ? $class : null;
     }
 }

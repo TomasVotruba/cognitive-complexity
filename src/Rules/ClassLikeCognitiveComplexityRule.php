@@ -6,6 +6,7 @@ namespace TomasVotruba\CognitiveComplexity\Rules;
 
 use PhpParser\Node;
 use PhpParser\Node\Stmt\Class_;
+use PhpParser\Node\Stmt\Enum_;
 use PHPStan\Analyser\Scope;
 use PHPStan\Node\InClassNode;
 use PHPStan\Rules\Rule;
@@ -15,6 +16,8 @@ use TomasVotruba\CognitiveComplexity\Configuration;
 use TomasVotruba\CognitiveComplexity\Enum\RuleIdentifier;
 
 /**
+ * @implements Rule<InClassNode>
+ *
  * @see \TomasVotruba\CognitiveComplexity\Tests\Rules\ClassLikeCognitiveComplexityRule\ClassLikeCognitiveComplexityRuleTest
  */
 final readonly class ClassLikeCognitiveComplexityRule implements Rule
@@ -27,9 +30,6 @@ final readonly class ClassLikeCognitiveComplexityRule implements Rule
     ) {
     }
 
-    /**
-     * @return class-string<Node>
-     */
     public function getNodeType(): string
     {
         return InClassNode::class;
@@ -41,7 +41,7 @@ final readonly class ClassLikeCognitiveComplexityRule implements Rule
     public function processNode(Node $node, Scope $scope): array
     {
         $classLike = $node->getOriginalNode();
-        if (! $classLike instanceof Class_) {
+        if (! $classLike instanceof Class_ && ! $classLike instanceof Enum_) {
             return [];
         }
 

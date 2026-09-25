@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace TomasVotruba\CognitiveComplexity;
 
-use PhpParser\Node\Stmt\Class_;
+use PhpParser\Node\Stmt\ClassLike;
 use PhpParser\Node\Stmt\ClassMethod;
 use PhpParser\Node\Stmt\Function_;
 use TomasVotruba\CognitiveComplexity\DataCollector\CognitiveComplexityDataCollector;
@@ -25,10 +25,10 @@ final readonly class AstCognitiveComplexityAnalyzer
     ) {
     }
 
-    public function analyzeClassLike(Class_ $class): int
+    public function analyzeClassLike(ClassLike $classLike): int
     {
         $totalCognitiveComplexity = 0;
-        foreach ($class->getMethods() as $classMethod) {
+        foreach ($classLike->getMethods() as $classMethod) {
             $totalCognitiveComplexity += $this->analyzeFunctionLike($classMethod);
         }
 

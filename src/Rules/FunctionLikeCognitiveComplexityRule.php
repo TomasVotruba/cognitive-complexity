@@ -29,6 +29,8 @@ use TomasVotruba\CognitiveComplexity\Exception\ShouldNotHappenException;
  *
  * @see https://www.tomasvotruba.com/blog/2018/05/21/is-your-code-readable-by-humans-cognitive-complexity-tells-you/
  *
+ * @implements Rule<FunctionLike>
+ *
  * @see \TomasVotruba\CognitiveComplexity\Tests\Rules\FunctionLikeCognitiveComplexityRule\FunctionLikeCognitiveComplexityRuleTest
  */
 final readonly class FunctionLikeCognitiveComplexityRule implements Rule
@@ -41,9 +43,6 @@ final readonly class FunctionLikeCognitiveComplexityRule implements Rule
     ) {
     }
 
-    /**
-     * @return class-string<Node>
-     */
     public function getNodeType(): string
     {
         return FunctionLike::class;
