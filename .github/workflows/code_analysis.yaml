@@ -56,3 +56,21 @@ jobs:
             -   uses: "ramsey/composer-install@v4"
 
             -   run: ${{ matrix.actions.run }}
+
+    # lint src against the lowest supported PHP to catch too-new syntax
+    php_74_compatibility:
+        name: 'PHP 7.4 Compatibility'
+        runs-on: ubuntu-latest
+
+        steps:
+            -   uses: actions/checkout@v7
+
+            -   uses: shivammathur/setup-php@v2
+                with:
+                    php-version: 7.4
+                    coverage: none
+
+            # standalone install to avoid dev tools that require PHP 8
+            -   run: composer require php-parallel-lint/php-parallel-lint --no-interaction --working-dir=/tmp/parallel-lint
+
+            -   run: /tmp/parallel-lint/vendor/bin/parallel-lint src

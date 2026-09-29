@@ -19,10 +19,16 @@ final class ComplexityNodeVisitor extends NodeVisitorAbstract
      */
     private array $sequenceContinuationIds = [];
 
+    private CognitiveComplexityDataCollector $cognitiveComplexityDataCollector;
+
+    private ComplexityAffectingNodeFinder $complexityAffectingNodeFinder;
+
     public function __construct(
-        private readonly CognitiveComplexityDataCollector $cognitiveComplexityDataCollector,
-        private readonly ComplexityAffectingNodeFinder $complexityAffectingNodeFinder
+        CognitiveComplexityDataCollector $cognitiveComplexityDataCollector,
+        ComplexityAffectingNodeFinder $complexityAffectingNodeFinder
     ) {
+        $this->cognitiveComplexityDataCollector = $cognitiveComplexityDataCollector;
+        $this->complexityAffectingNodeFinder = $complexityAffectingNodeFinder;
     }
 
     /**
@@ -38,7 +44,7 @@ final class ComplexityNodeVisitor extends NodeVisitorAbstract
     /**
      * @param Node|int $node On PHP 8.5 with php-parser v5, BackedEnumCase values may be passed as int
      */
-    public function enterNode(Node|int $node): ?Node
+    public function enterNode($node): ?Node
     {
         if (! $node instanceof Node) {
             return null;
@@ -66,7 +72,7 @@ final class ComplexityNodeVisitor extends NodeVisitorAbstract
         }
 
         foreach ([$binaryOp->left, $binaryOp->right] as $operand) {
-            if ($operand::class === $binaryOp::class) {
+            if (get_class($operand) === get_class($binaryOp)) {
                 $this->sequenceContinuationIds[spl_object_id($operand)] = true;
             }
         }

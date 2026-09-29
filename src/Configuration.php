@@ -4,14 +4,19 @@ declare(strict_types=1);
 
 namespace TomasVotruba\CognitiveComplexity;
 
-final readonly class Configuration
+final class Configuration
 {
+    /**
+     * @var array<string, mixed>
+     */
+    private array $parameters;
+
     /**
      * @param array<string, mixed> $parameters
      */
-    public function __construct(
-        private array $parameters
-    ) {
+    public function __construct(array $parameters)
+    {
+        $this->parameters = $parameters;
     }
 
     public function getMaxClassCognitiveComplexity(): int

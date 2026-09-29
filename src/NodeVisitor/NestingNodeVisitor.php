@@ -27,7 +27,7 @@ final class NestingNodeVisitor extends NodeVisitorAbstract
      *
      * @var array<class-string<Node>>
      */
-    private const array NESTING_NODE_TYPES = [
+    private const NESTING_NODE_TYPES = [
         If_::class,
         Switch_::class,
         Match_::class,
@@ -43,10 +43,16 @@ final class NestingNodeVisitor extends NodeVisitorAbstract
 
     private int $nestingLevel = 0;
 
+    private CognitiveComplexityDataCollector $cognitiveComplexityDataCollector;
+
+    private ComplexityAffectingNodeFinder $complexityAffectingNodeFinder;
+
     public function __construct(
-        private readonly CognitiveComplexityDataCollector $cognitiveComplexityDataCollector,
-        private readonly ComplexityAffectingNodeFinder $complexityAffectingNodeFinder,
+        CognitiveComplexityDataCollector $cognitiveComplexityDataCollector,
+        ComplexityAffectingNodeFinder $complexityAffectingNodeFinder
     ) {
+        $this->cognitiveComplexityDataCollector = $cognitiveComplexityDataCollector;
+        $this->complexityAffectingNodeFinder = $complexityAffectingNodeFinder;
     }
 
     /**
@@ -62,7 +68,7 @@ final class NestingNodeVisitor extends NodeVisitorAbstract
     /**
      * @param Node|int $node On PHP 8.5 with php-parser v5, BackedEnumCase values may be passed as int
      */
-    public function enterNode(Node|int $node): ?Node
+    public function enterNode($node): ?Node
     {
         if (! $node instanceof Node || ! $this->isNestingNode($node)) {
             return null;
@@ -81,7 +87,7 @@ final class NestingNodeVisitor extends NodeVisitorAbstract
     /**
      * @param Node|int $node On PHP 8.5 with php-parser v5, BackedEnumCase values may be passed as int
      */
-    public function leaveNode(Node|int $node): ?Node
+    public function leaveNode($node): ?Node
     {
         if ($node instanceof Node && $this->isNestingNode($node)) {
             --$this->nestingLevel;
@@ -92,6 +98,12 @@ final class NestingNodeVisitor extends NodeVisitorAbstract
 
     private function isNestingNode(Node $node): bool
     {
-        return array_any(self::NESTING_NODE_TYPES, fn (string $nestingNodeType): bool => $node instanceof $nestingNodeType);
+        foreach (self::NESTING_NODE_TYPES as $nestingNodeType) {
+            if ($node instanceof $nestingNodeType) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
