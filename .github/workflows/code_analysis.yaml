@@ -71,6 +71,6 @@ jobs:
                     coverage: none
 
             # standalone install to avoid dev tools that require PHP 8
-            -   run: composer require php-parallel-lint/php-parallel-lint --no-interaction --working-dir=/tmp/parallel-lint
+            -   run: composer global require php-parallel-lint/php-parallel-lint --no-interaction
 
-            -   run: /tmp/parallel-lint/vendor/bin/parallel-lint src
+            -   run: $(composer global config home)/vendor/bin/parallel-lint src
