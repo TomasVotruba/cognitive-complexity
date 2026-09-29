@@ -1,8 +1,0 @@
-includes:
-    - ../../../../config/extension.neon
-
-parameters:
-    cognitive_complexity:
-        dependency_tree: 20
-        dependency_tree_types:
-            - 'TomasVotruba\CognitiveComplexity\Tests\Rules\ClassDependencyTreeRule\Source\CheckComplexity'
