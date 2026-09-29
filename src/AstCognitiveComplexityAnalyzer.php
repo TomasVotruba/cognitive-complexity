@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace TomasVotruba\CognitiveComplexity;
 
+use PhpParser\Node\FunctionLike;
 use PhpParser\Node\Stmt\ClassLike;
 use PhpParser\Node\Stmt\ClassMethod;
 use PhpParser\Node\Stmt\Function_;
@@ -15,12 +16,18 @@ use TomasVotruba\CognitiveComplexity\NodeTraverser\ComplexityNodeTraverserFactor
  *
  * implements the concept described in https://www.sonarsource.com/resources/white-papers/cognitive-complexity/
  */
-final readonly class AstCognitiveComplexityAnalyzer
+final class AstCognitiveComplexityAnalyzer
 {
+    private ComplexityNodeTraverserFactory $complexityNodeTraverserFactory;
+
+    private CognitiveComplexityDataCollector $cognitiveComplexityDataCollector;
+
     public function __construct(
-        private ComplexityNodeTraverserFactory $complexityNodeTraverserFactory,
-        private CognitiveComplexityDataCollector $cognitiveComplexityDataCollector
+        ComplexityNodeTraverserFactory $complexityNodeTraverserFactory,
+        CognitiveComplexityDataCollector $cognitiveComplexityDataCollector
     ) {
+        $this->complexityNodeTraverserFactory = $complexityNodeTraverserFactory;
+        $this->cognitiveComplexityDataCollector = $cognitiveComplexityDataCollector;
     }
 
     public function analyzeClassLike(ClassLike $classLike): int
@@ -35,8 +42,10 @@ final readonly class AstCognitiveComplexityAnalyzer
 
     /**
      * @api
+     *
+     * @param Function_|ClassMethod $functionLike
      */
-    public function analyzeFunctionLike(Function_|ClassMethod $functionLike): int
+    public function analyzeFunctionLike(FunctionLike $functionLike): int
     {
         $this->cognitiveComplexityDataCollector->reset();
 

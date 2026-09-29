@@ -8,12 +8,18 @@ use PhpParser\NodeTraverser;
 use TomasVotruba\CognitiveComplexity\NodeVisitor\ComplexityNodeVisitor;
 use TomasVotruba\CognitiveComplexity\NodeVisitor\NestingNodeVisitor;
 
-final readonly class ComplexityNodeTraverserFactory
+final class ComplexityNodeTraverserFactory
 {
+    private NestingNodeVisitor $nestingNodeVisitor;
+
+    private ComplexityNodeVisitor $complexityNodeVisitor;
+
     public function __construct(
-        private NestingNodeVisitor $nestingNodeVisitor,
-        private ComplexityNodeVisitor $complexityNodeVisitor
+        NestingNodeVisitor $nestingNodeVisitor,
+        ComplexityNodeVisitor $complexityNodeVisitor
     ) {
+        $this->nestingNodeVisitor = $nestingNodeVisitor;
+        $this->complexityNodeVisitor = $complexityNodeVisitor;
     }
 
     public function create(): NodeTraverser

@@ -6,7 +6,7 @@ namespace TomasVotruba\CognitiveComplexity\Enum;
 
 final class RuleIdentifier
 {
-    public const string FUNCTION_COMPLEXITY = 'complexity.functionLike';
+    public const FUNCTION_COMPLEXITY = 'complexity.functionLike';
 
-    public const string CLASS_LIKE_COMPLEXITY = 'complexity.classLike';
+    public const CLASS_LIKE_COMPLEXITY = 'complexity.classLike';
 }

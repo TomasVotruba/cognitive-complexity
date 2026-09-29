@@ -7,6 +7,13 @@ parameters:
         class: 50
         function: 8
 
+    # typed constants require PHP 8.3, but this package supports PHP 7.4+
+    type_coverage:
+        return_type: 99
+        param_type: 99
+        property_type: 99
+        constant_type: 0
+
     unused_public:
         methods: true
         properties: true

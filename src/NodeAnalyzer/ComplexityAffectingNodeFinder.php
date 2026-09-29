@@ -33,14 +33,14 @@ final class ComplexityAffectingNodeFinder
      *
      * @var array<class-string<Stmt>>
      */
-    private const array BREAKING_NODE_TYPES = [Continue_::class, Goto_::class, Break_::class];
+    private const BREAKING_NODE_TYPES = [Continue_::class, Goto_::class, Break_::class];
 
     /**
      * B1. Increments
      *
      * @var array<class-string<Node>>
      */
-    private const array INCREASING_NODE_TYPES = [
+    private const INCREASING_NODE_TYPES = [
         If_::class,
         Else_::class,
         ElseIf_::class,
@@ -59,7 +59,7 @@ final class ComplexityAffectingNodeFinder
      *
      * @var array<class-string<Expr>>
      */
-    private const array BOOLEAN_OPERATOR_TYPES = [
+    private const BOOLEAN_OPERATOR_TYPES = [
         BooleanAnd::class,
         BooleanOr::class,
         LogicalAnd::class,
@@ -105,6 +105,12 @@ final class ComplexityAffectingNodeFinder
      */
     private function isInstanceOf(Node $node, array $types): bool
     {
-        return array_any($types, fn (string $type): bool => $node instanceof $type);
+        foreach ($types as $type) {
+            if ($node instanceof $type) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
