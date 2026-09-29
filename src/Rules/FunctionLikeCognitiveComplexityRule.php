@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace TomasVotruba\CognitiveComplexity\Rules;
 
 use PhpParser\Node;
-use PhpParser\Node\Expr\ArrowFunction;
-use PhpParser\Node\Expr\Closure;
 use PhpParser\Node\FunctionLike;
 use PhpParser\Node\Stmt\ClassMethod;
 use PhpParser\Node\Stmt\Function_;
@@ -89,14 +87,6 @@ final readonly class FunctionLikeCognitiveComplexityRule implements Rule
             }
 
             return $name . $functionLike->name . '()';
-        }
-
-        if ($functionLike instanceof Closure) {
-            return 'closure';
-        }
-
-        if ($functionLike instanceof ArrowFunction) {
-            return 'arrow function';
         }
 
         throw new ShouldNotHappenException();
