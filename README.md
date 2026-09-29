@@ -70,6 +70,15 @@ Each rule has its own error identifier, so you can ignore it on a specific place
 * `complexity.classLike`
 * `complexity.functionLike`
 
+```yaml
+# phpstan.neon
+parameters:
+    ignoreErrors:
+        -
+            identifier: complexity.functionLike
+            path: src/SomeComplexClass.php
+```
+
 <br>
 
 Happy coding!
