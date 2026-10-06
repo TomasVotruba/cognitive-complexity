@@ -14,11 +14,6 @@ parameters:
         property_type: 99
         constant_type: 0
 
-    unused_public:
-        methods: true
-        properties: true
-        constants: true
-
     symplify:
         naming: true
         complexity: true
@@ -44,6 +39,3 @@ parameters:
     ignoreErrors:
         # skip as always string
         - '#Parameter \#1 \$currentWorkingDirectory of class PHPStan\\DependencyInjection\\ContainerFactory constructor expects string, string\|false given#'
-
-        # used in tests
-        - '#Public constant "TomasVotruba\\CognitiveComplexity\\Rules\\(.*?)::ERROR_MESSAGE" is never used#'

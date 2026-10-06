@@ -17,9 +17,9 @@
         "tracy/tracy": "^2.12",
         "php-parallel-lint/php-parallel-lint": "^1.4",
         "tomasvotruba/type-coverage": "^2.3",
-        "tomasvotruba/unused-public": "^2.2",
         "rector/jack": "^1.1",
-        "symplify/phpstan-rules": "^14.17"
+        "symplify/phpstan-rules": "^14.17",
+        "shipmonk/dead-code-detector": "^1.4"
     },
     "autoload": {
         "psr-4": {
