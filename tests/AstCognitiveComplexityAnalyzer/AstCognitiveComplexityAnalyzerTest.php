@@ -6,6 +6,7 @@ namespace TomasVotruba\CognitiveComplexity\Tests\AstCognitiveComplexityAnalyzer;
 
 use Iterator;
 use PhpParser\Node;
+use PhpParser\Node\FunctionLike;
 use PhpParser\Node\Stmt\ClassMethod;
 use PhpParser\Node\Stmt\Function_;
 use PhpParser\NodeFinder;
@@ -60,7 +61,10 @@ final class AstCognitiveComplexityAnalyzerTest extends TestCase
         yield [__DIR__ . '/Fixture/arrow_function_2.php.inc', 2];
     }
 
-    private function parseFileToFirstFunctionLike(string $fileContent): ClassMethod|Function_
+    /**
+     * @return ClassMethod|Function_
+     */
+    private function parseFileToFirstFunctionLike(string $fileContent): FunctionLike
     {
         $parserFactory = new ParserFactory();
         $parser = $parserFactory->createForHostVersion();
